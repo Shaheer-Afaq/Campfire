@@ -1,25 +1,10 @@
-[gd_scene format=3 uid="uid://dxna8v8y0dhdi"]
+[gd_scene format=3 uid="uid://diydmv22pw5rb"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_7xaro"]
-animations = [{
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}]
+[ext_resource type="Script" uid="uid://d0535jl7kbvdu" path="res://scripts/enemy.gd" id="1_7p1mj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k104"]
+[node name="enemy" type="CharacterBody2D" unique_id=1911787593]
+script = ExtResource("1_7p1mj")
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=551690879]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=12745960]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1960509317]
-sprite_frames = SubResource("SpriteFrames_7xaro")
-animation = &"idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1357538064]
-shape = SubResource("RectangleShape2D_7k104")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
