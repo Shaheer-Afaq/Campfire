@@ -3,10 +3,11 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-var health = 500
+var health = 20
 
 func _ready() -> void:
 	add_to_group("enemies")
+	$AnimatedSprite2D.play("idle")
 	
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -16,5 +17,14 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func _process(delta: float) -> void:
-	$AnimatedSprite2D.play("idle")
+	pass
 	
+func take_damage():
+	health -= 3
+	print(health)
+	$AnimatedSprite2D.play("hurt")  # or "idle" if you want
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if $AnimatedSprite2D.animation == "hurt":
+		$AnimatedSprite2D.play("idle")

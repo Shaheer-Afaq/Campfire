@@ -219,5 +219,7 @@ shape = SubResource("RectangleShape2D_xwavj")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
 position = Vector2(-4.285714, 0)
 sprite_frames = SubResource("SpriteFrames_2sbpf")
-animation = &"idle"
-frame_progress = 0.79500014
+animation = &"hurt"
+frame_progress = 0.71429676
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -18,13 +18,13 @@ func _physics_process(delta: float) -> void:
 		$attack.play(0.0)
 		for body in $attack_hitbox.get_overlapping_bodies():
 			if body.is_in_group("enemies"):
-				body.health -= 5  # damage over time
-				body.$AnimatedSprite2D.play("idle")
+				body.take_damage()
 	
 	if not is_attacking():
 		var direction := Input.get_axis("left", "right")
-		velocity.x += direction * Manager.speed * delta * 60  # frame-independent
-
+		velocity.x += direction * Manager.speed * delta * 60
+		
+		
 		if abs(velocity.x) > 30:
 			if not $footsteps.playing:
 				$footsteps.play(0.0)
@@ -37,6 +37,8 @@ func _physics_process(delta: float) -> void:
 		else:
 			$footsteps.stop()	
 			$AnimatedSprite2D.play("idle")
+			
+		$attack_hitbox.position.x = -25 if $AnimatedSprite2D.flip_h else 25
 		
 	var collison = move_and_slide()
 	#var touching_floor = is_on_floor()
