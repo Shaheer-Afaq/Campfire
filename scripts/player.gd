@@ -29,13 +29,15 @@ func _physics_process(delta: float) -> void:
 
 		# Animations
 	if abs(velocity.x) > 30:
-		footsteps.pick_random().play()
+		if not $footsteps.playing:
+			$footsteps.play(0.0)
 		if velocity.x > 0:
 			$AnimatedSprite2D.flip_h = false
 		else:
 			$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.play("run")
 	else:
+		$footsteps.stop()	
 		$AnimatedSprite2D.play("idle")
 
 	var collison = move_and_slide()
