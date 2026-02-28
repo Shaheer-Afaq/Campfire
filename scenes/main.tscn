@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://comsswrk53uc4"]
+
+[ext_resource type="PackedScene" uid="uid://bhoee4gtuu42d" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://c50hx5fogt87h" path="res://scripts/main.gd" id="1_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bt1ubllbiu0je" path="res://scenes/level.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://d1rc6wvgjcrb1" path="res://scenes/platform.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bn0ebcm722ark" path="res://scenes/area.tscn" id="5_tefeu"]
+
+[sub_resource type="GDScript" id="GDScript_o6xl0"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+"
+
+[node name="main" type="Node2D" unique_id=1395681280]
+script = ExtResource("1_tbgi4")
+
+[node name="Player" parent="." unique_id=444317631 instance=ExtResource("1_o5qli")]
+position = Vector2(108, 192)
+scale = Vector2(1.0079163, 1)
+
+[node name="TileMap" parent="." unique_id=689653070 instance=ExtResource("2_0wfyh")]
+position = Vector2(42, 165)
+layer_0/tile_data = PackedInt32Array(262144, 65537, 0, 262145, 65537, 0, 262146, 65537, 0, 262147, 65537, 0, 262148, 65537, 0, 262149, 65537, 0, 262150, 65537, 0, 262151, 65537, 0, 262152, 65537, 0, 262158, 196609, 0, 262159, 65537, 0, 0, 65537, 0, 65536, 65537, 0, 131072, 65537, 0, 196608, 65537, 0, 22, 65537, 0, 65558, 65537, 0, 131094, 65537, 0, 196630, 65537, 0, 262166, 65537, 0, 262165, 65537, 0, 262164, 65537, 0, 262163, 65537, 0, 262162, 65537, 0, 262161, 65537, 0, 262160, 65537, 0)
+
+[node name="platform" parent="." unique_id=1359832877 instance=ExtResource("3_sugp2")]
+position = Vector2(229, 237)
+script = SubResource("GDScript_o6xl0")
+
+[node name="area" parent="." unique_id=1830766168 instance=ExtResource("5_tefeu")]
+position = Vector2(229, 198.99998)
+scale = Vector2(5.285, 3.04)
