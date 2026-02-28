@@ -1,15 +1,10 @@
 extends CharacterBody2D
 
-
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const GRAVITY = 2000
 
-
-var footsteps
-
-func _ready() -> void:
-	footsteps = [$foot1, $foot2, $foot3]
+#func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	#if is_dead:
 		#if $AnimatedSprite2D.frame == 28:

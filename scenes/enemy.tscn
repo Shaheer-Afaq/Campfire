@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dxna8v8y0dhdi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7xaro"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k104"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=551690879]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1960509317]
+sprite_frames = SubResource("SpriteFrames_7xaro")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1357538064]
+shape = SubResource("RectangleShape2D_7k104")
