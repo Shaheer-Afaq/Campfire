@@ -5,6 +5,11 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const GRAVITY = 2000
 
+
+var footsteps
+
+func _ready() -> void:
+	footsteps = [$foot1, $foot2, $foot3]
 func _physics_process(delta: float) -> void:
 	#if is_dead:
 		#if $AnimatedSprite2D.frame == 28:
@@ -24,6 +29,7 @@ func _physics_process(delta: float) -> void:
 
 		# Animations
 	if abs(velocity.x) > 30:
+		footsteps.pick_random().play()
 		if velocity.x > 0:
 			$AnimatedSprite2D.flip_h = false
 		else:
