@@ -220,4 +220,4 @@ shape = SubResource("RectangleShape2D_xwavj")
 position = Vector2(-4.285714, 0)
 sprite_frames = SubResource("SpriteFrames_2sbpf")
 animation = &"idle"
-frame_progress = 0.52746737
+frame_progress = 0.79500014

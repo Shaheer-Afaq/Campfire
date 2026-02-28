@@ -13,10 +13,15 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
 		
-	if Input.is_action_pressed("attack"):
+	if Input.is_action_pressed("attack") and not is_attacking():
 		$AnimatedSprite2D.play("attack")
+		$attack.play(0.0)
+		for body in $attack_hitbox.get_overlapping_bodies():
+			if body.is_in_group("enemies"):
+				body.health -= 5  # damage over time
+				body.$AnimatedSprite2D.play("idle")
 	
-	if not ($AnimatedSprite2D.animation == "attack" and $AnimatedSprite2D.is_playing()):
+	if not is_attacking():
 		var direction := Input.get_axis("left", "right")
 		velocity.x += direction * Manager.speed * delta * 60  # frame-independent
 
@@ -38,3 +43,10 @@ func _physics_process(delta: float) -> void:
 	#var touching_ceiling = is_on_ceiling()
 	#if touching_floor and touching_ceiling:
 		#die()
+
+func is_attacking():
+	return $AnimatedSprite2D.animation == "attack" and $AnimatedSprite2D.is_playing()
+
+#func _on_attack_hitbox_body_entered(body: Node2D) -> void:
+	#if body.is_in_group("enemies"):
+		#body.health -= 5
