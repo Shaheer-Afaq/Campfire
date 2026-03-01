@@ -209,6 +209,9 @@ size = Vector2(32.857162, 50.00001)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
 size = Vector2(22.963575, 50)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
+radius = 151.42856
+
 [node name="enemy" type="CharacterBody2D" unique_id=1911787593]
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
@@ -234,6 +237,12 @@ shape = SubResource("RectangleShape2D_xwavj")
 position = Vector2(11.5, 0)
 scale = Vector2(0.9999998, 0.9999998)
 shape = SubResource("RectangleShape2D_nenq2")
+
+[node name="range" type="Area2D" parent="." unique_id=674919911]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="range" unique_id=955425762]
+position = Vector2(7.6293945e-06, 9.536743e-07)
+shape = SubResource("CircleShape2D_xwavj")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]

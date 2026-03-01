@@ -69,7 +69,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 		State.HURT:
 			change_state(State.IDLE)
-
+		
 		State.DIE:
 			queue_free()
 			
