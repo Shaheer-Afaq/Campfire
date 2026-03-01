@@ -1,12 +1,20 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
 const GRAVITY = 2000
+var is_dead = false
 
-#func _ready() -> void:
+func _ready() -> void:
+	add_to_group("player")
+	position = Manager.last_checkpoint
+	
 func _physics_process(delta: float) -> void:
-	velocity.x *= 0.89
+	if is_dead:
+		if $AnimatedSprite2D.frame == 22:
+			Manager.lives -= 1
+			get_tree().reload_current_scene()
+		else: return
+		
+	velocity.x *= 0.87
 	
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -24,9 +32,8 @@ func _physics_process(delta: float) -> void:
 		var direction := Input.get_axis("left", "right")
 		velocity.x += direction * Manager.speed * delta * 60
 		
-		
 		if abs(velocity.x) > 30:
-			if not $footsteps.playing:
+			if not $footsteps.playing and is_on_floor():
 				$footsteps.play(0.0)
 			if velocity.x > 0:
 				$AnimatedSprite2D.flip_h = false
@@ -46,9 +53,26 @@ func _physics_process(delta: float) -> void:
 	#if touching_floor and touching_ceiling:
 		#die()
 
+
+func take_damage(amount):
+	Manager.health -= 5
+	if not is_being_hurt(): $AnimatedSprite2D.play("hurt")
+	
+func die() -> void:
+	if is_dying(): return
+	$AnimatedSprite2D.play("die")
+	$hurt.play(0.2)
+	
 func is_attacking():
 	return $AnimatedSprite2D.animation == "attack" and $AnimatedSprite2D.is_playing()
+	
+func is_dying():
+	return $AnimatedSprite2D.animation == "die" and $AnimatedSprite2D.is_playing()
 
-#func _on_attack_hitbox_body_entered(body: Node2D) -> void:
-	#if body.is_in_group("enemies"):
-		#body.health -= 5
+func is_being_hurt():
+	return $AnimatedSprite2D.animation == "hurt" and $AnimatedSprite2D.is_playing()
+	
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if $AnimatedSprite2D.animation == "die":
+		Manager.lives -= 1

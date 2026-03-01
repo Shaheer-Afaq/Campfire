@@ -12,6 +12,8 @@ size = Vector2(85, 41)
 [node name="platform" type="CharacterBody2D" unique_id=1359832877]
 collision_mask = 2
 script = ExtResource("1_nlgqw")
+offset = null
+duration = null
 
 [node name="collision" type="CollisionShape2D" parent="." unique_id=1232905361]
 shape = SubResource("RectangleShape2D_v4t87")

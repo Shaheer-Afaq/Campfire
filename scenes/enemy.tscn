@@ -7,9 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cc8fnr53qif0c" path="res://assets/skeleton/Idle.png" id="5_ipns3"]
 [ext_resource type="Texture2D" uid="uid://2fgha7frnb8p" path="res://assets/skeleton/Walk.png" id="6_8qclf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwavj"]
-size = Vector2(32.857162, 50.00001)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8i8w"]
 atlas = ExtResource("2_xwavj")
 region = Rect2(0, 0, 150, 150)
@@ -150,8 +147,8 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wrm80")
 }],
-"loop": true,
-"name": &"death",
+"loop": false,
+"name": &"die",
 "speed": 12.0
 }, {
 "frames": [{
@@ -167,9 +164,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2mchx")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
-"speed": 10.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -206,20 +203,33 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwavj"]
+size = Vector2(32.857162, 50.00001)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
+size = Vector2(17.142868, 50)
+
 [node name="enemy" type="CharacterBody2D" unique_id=1911787593]
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_7p1mj")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
+position = Vector2(0, -1.4285715)
+scale = Vector2(0.99999994, 0.99999994)
+sprite_frames = SubResource("SpriteFrames_2sbpf")
+animation = &"hurt"
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=12745960]
-position = Vector2(0.7142842, 0.7142784)
+position = Vector2(-1.1368684e-13, -4.5474735e-13)
 scale = Vector2(0.9999992, 0.9999992)
 shape = SubResource("RectangleShape2D_xwavj")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
-position = Vector2(-4.285714, 0)
-sprite_frames = SubResource("SpriteFrames_2sbpf")
-animation = &"hurt"
-frame_progress = 0.71429676
+[node name="attack_hitbox" type="Area2D" parent="." unique_id=225445508]
+position = Vector2(8, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
+shape = SubResource("RectangleShape2D_nenq2")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]

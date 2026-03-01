@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://comsswrk53uc4"]
+
+[ext_resource type="Script" uid="uid://c50hx5fogt87h" path="res://scripts/game.gd" id="1_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://bt1ubllbiu0je" path="res://scenes/level.tscn" id="2_iywne"]
+[ext_resource type="PackedScene" uid="uid://diydmv22pw5rb" path="res://scenes/enemy.tscn" id="3_p57ef"]
+[ext_resource type="PackedScene" uid="uid://bhoee4gtuu42d" path="res://scenes/player.tscn" id="4_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://dki8uvb1vdlca" path="res://scenes/checkpoint.tscn" id="5_iywne"]
+
+[node name="game" type="Node2D" unique_id=1395681280]
+script = ExtResource("1_lbhrr")
+
+[node name="TileMap" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+position = Vector2(1346, 164)
+
+[node name="enemy" parent="." unique_id=1911787593 instance=ExtResource("3_p57ef")]
+position = Vector2(65, 52)
+
+[node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
+position = Vector2(-76, 52)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160266530]
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=990927984]
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 149.0
+offset_bottom = 36.0
+scale = Vector2(1, 0.64000034)
+value = 25.0
+rounded = true
+show_percentage = false
+
+[node name="checkpoint" parent="CanvasLayer" unique_id=1209732935 instance=ExtResource("5_iywne")]
+position = Vector2(-10, 140)
+script = null
