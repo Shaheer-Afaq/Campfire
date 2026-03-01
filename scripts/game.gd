@@ -1,12 +1,7 @@
 extends Node2D
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#$area.event.connect($platform.ontrigg)
-	pass
+	Manager.health = 50
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
