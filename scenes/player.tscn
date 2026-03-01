@@ -408,7 +408,7 @@ size = Vector2(51.23712, 67.010315)
 [node name="Player" type="CharacterBody2D" unique_id=444317631]
 texture_filter = 1
 scale = Vector2(0.6, 0.6)
-collision_layer = 3
+collision_mask = 2
 script = ExtResource("1_tuyoq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=51699640]
@@ -430,6 +430,7 @@ position_smoothing_enabled = true
 
 [node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=279879882]
 stream = ExtResource("7_fjrip")
+volume_db = 15.0
 
 [node name="attack_hitbox" type="Area2D" parent="." unique_id=2025289131]
 position = Vector2(25, -10)

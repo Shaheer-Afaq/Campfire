@@ -207,11 +207,13 @@ animations = [{
 size = Vector2(32.857162, 50.00001)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
-size = Vector2(17.142868, 50)
+size = Vector2(22.963575, 50)
 
 [node name="enemy" type="CharacterBody2D" unique_id=1911787593]
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_7p1mj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
@@ -226,9 +228,10 @@ scale = Vector2(0.9999992, 0.9999992)
 shape = SubResource("RectangleShape2D_xwavj")
 
 [node name="attack_hitbox" type="Area2D" parent="." unique_id=225445508]
-position = Vector2(8, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
+position = Vector2(11.5, 0)
+scale = Vector2(0.9999998, 0.9999998)
 shape = SubResource("RectangleShape2D_nenq2")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
