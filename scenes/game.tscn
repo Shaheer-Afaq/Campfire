@@ -8,6 +8,9 @@
 [node name="game" type="Node2D" unique_id=1395681280]
 script = ExtResource("1_lbhrr")
 
+[node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
+position = Vector2(31, 103)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160266530]
 
 [node name="Health Bar" type="ProgressBar" parent="CanvasLayer" unique_id=990927984]
@@ -25,8 +28,5 @@ show_percentage = false
 [node name="Level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
 position = Vector2(1387, 137)
 
-[node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
-position = Vector2(-22, 105)
-
 [node name="enemy" parent="." unique_id=1911787593 instance=ExtResource("3_p57ef")]
-position = Vector2(66, 128)
+position = Vector2(192, 141)

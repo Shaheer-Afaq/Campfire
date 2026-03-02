@@ -132,7 +132,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 15.0
+"speed": 17.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -198,7 +198,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ekh6n")
 }],
-"loop": false,
+"loop": true,
 "name": &"walk",
 "speed": 10.0
 }]
@@ -206,24 +206,25 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xwavj"]
 size = Vector2(32.857162, 50.00001)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
-size = Vector2(22.963575, 50)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xwavj"]
+radius = 77.1429
+height = 374.28592
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xwavj"]
-radius = 151.42856
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
+size = Vector2(22.857151, 30.000011)
 
 [node name="enemy" type="CharacterBody2D" unique_id=1911787593]
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
 collision_layer = 4
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("1_7p1mj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
 position = Vector2(0, -1.4285715)
 scale = Vector2(0.99999994, 0.99999994)
 sprite_frames = SubResource("SpriteFrames_2sbpf")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=12745960]
@@ -231,18 +232,24 @@ position = Vector2(-1.1368684e-13, -4.5474735e-13)
 scale = Vector2(0.9999992, 0.9999992)
 shape = SubResource("RectangleShape2D_xwavj")
 
-[node name="attack_hitbox" type="Area2D" parent="." unique_id=225445508]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
-position = Vector2(11.5, 0)
-scale = Vector2(0.9999998, 0.9999998)
-shape = SubResource("RectangleShape2D_nenq2")
-
 [node name="range" type="Area2D" parent="." unique_id=674919911]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="range" unique_id=955425762]
-position = Vector2(7.6293945e-06, 9.536743e-07)
-shape = SubResource("CircleShape2D_xwavj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="range" unique_id=103990536]
+position = Vector2(-1.4285706, 0)
+rotation = 1.5707964
+scale = Vector2(0.9999995, 0.9999995)
+shape = SubResource("CapsuleShape2D_xwavj")
+
+[node name="attack_hitbox" type="Area2D" parent="." unique_id=225445508]
+position = Vector2(20, 0)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
+position = Vector2(-1.4285717, -3.5714293)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_nenq2")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="range" to="." method="_on_range_body_exited"]
 [connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]

@@ -17,15 +17,16 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
 
-	if Input.is_action_just_pressed("attack") and state != State.ATTACK:
+	if Input.is_action_pressed("attack") and state != State.ATTACK:
 		change_state(State.ATTACK)
 		$attack.play(0.0)
-
-		for body in $attack_hitbox.get_overlapping_bodies():
-			if body.is_in_group("enemies"):
-				body.take_damage()
-
-	if state != State.ATTACK:
+				
+	if state == State.ATTACK:
+		if $AnimatedSprite2D.frame == 2:
+			var target = is_enemy_in_attack_range()
+			if target: target.take_damage(40*delta)
+				
+	else:
 		var direction := Input.get_axis("left", "right")
 		velocity.x += direction * Manager.speed * delta * 60
 		
@@ -39,6 +40,7 @@ func _physics_process(delta: float) -> void:
 			$footsteps.stop()
 	
 	$attack_hitbox.position.x = -25 if $AnimatedSprite2D.flip_h else 25
+	$hitbox.position.x = -2 if $AnimatedSprite2D.flip_h else 2
 	
 	move_and_slide()
 
@@ -65,7 +67,7 @@ func change_state(new_state):
 		State.RUN:
 			$AnimatedSprite2D.play("run")
 		State.ATTACK:
-			$AnimatedSprite2D.play("attack")
+			$AnimatedSprite2D.play(["attack", "attack1"].pick_random())
 		State.HURT:
 			hurt_flash()
 		State.DIE:
@@ -98,3 +100,8 @@ func hurt_flash():
 	)
 	#tween.finished.connect(func(): change_state(State.IDLE))
 	tween.finished.connect(func(): print(1))
+func is_enemy_in_attack_range():
+	for body in $attack_hitbox.get_overlapping_bodies():
+		if body.is_in_group("enemies"):
+			return body
+	return false
