@@ -104,7 +104,7 @@ func change_state(new_state):
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match state:
 		State.ATTACK:
-			#has_attacked = false
+			has_attacked = false
 			change_state(State.CHASE)
 		State.HURT:
 			change_state(State.IDLE)
