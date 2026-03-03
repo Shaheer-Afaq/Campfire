@@ -1,7 +1,8 @@
 extends Node2D
 
 func _ready() -> void:
-	Manager.health = 50
-
+	Manager.health = Manager.TOTAL_HEALTH
+	$Player.position = Vector2(180, 300)
+	$"CanvasLayer/Health Bar".max_value = Manager.TOTAL_HEALTH
 func _process(delta: float) -> void:
-	pass
+	print(Manager.lives)

@@ -2,10 +2,10 @@ extends Node
 
 #var gameScene = preload("res://Scenes/game.tscn")
 #var enemyScene = preload("res://Scenes/enemy.tscn")
-#var player = preload("res://Scenes/player.tscn")
 
+const TOTAL_HEALTH = 80
 var lives: int = 3
-var health: int = 50
+var health
 var speed :int = 25
 var jump_velocity: int = -400
 var initial_position: Vector2 = Vector2(47, 36)

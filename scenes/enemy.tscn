@@ -132,7 +132,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 17.0
+"speed": 14.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -211,21 +211,25 @@ radius = 77.1429
 height = 374.28592
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
-size = Vector2(22.857151, 30.000011)
+size = Vector2(17.142862, 30.000011)
+
+[sub_resource type="AudioStream" id="AudioStream_xwavj"]
 
 [node name="enemy" type="CharacterBody2D" unique_id=1911787593]
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
 collision_layer = 4
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_7p1mj")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=34746082]
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=34746082]
 position = Vector2(0, -1.4285715)
 scale = Vector2(0.99999994, 0.99999994)
 sprite_frames = SubResource("SpriteFrames_2sbpf")
 animation = &"attack"
 autoplay = "idle"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=12745960]
 position = Vector2(-1.1368684e-13, -4.5474735e-13)
@@ -245,11 +249,19 @@ position = Vector2(20, 0)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
-position = Vector2(-1.4285717, -3.5714293)
+position = Vector2(-4.285714, -3.5714293)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_nenq2")
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[node name="attacksound" type="AudioStreamPlayer2D" parent="." unique_id=1449337977]
+scale = Vector2(1.4285713, 1.4285713)
+stream = SubResource("AudioStream_xwavj")
+volume_db = -5.0
+
+[node name="deathsound" type="AudioStreamPlayer2D" parent="." unique_id=255272906]
+volume_db = 3.0
+
+[connection signal="animation_finished" from="sprite" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="range" to="." method="_on_range_body_entered"]
 [connection signal="body_exited" from="range" to="." method="_on_range_body_exited"]
 [connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]

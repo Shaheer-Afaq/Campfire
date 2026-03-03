@@ -9,24 +9,56 @@
 script = ExtResource("1_lbhrr")
 
 [node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
-position = Vector2(31, 103)
+position = Vector2(180, 298)
+
+[node name="Level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+position = Vector2(1573, 334)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160266530]
 
 [node name="Health Bar" type="ProgressBar" parent="CanvasLayer" unique_id=990927984]
 modulate = Color(1, 0, 0, 1)
-offset_left = 10.0
-offset_top = 9.0
-offset_right = 149.0
-offset_bottom = 36.0
+offset_left = 276.0
+offset_top = 560.0
+offset_right = 876.0
+offset_bottom = 610.0
 scale = Vector2(1, 0.64000034)
 max_value = 50.0
 value = 25.0
 rounded = true
 show_percentage = false
 
-[node name="Level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
-position = Vector2(1387, 137)
+[node name="enemies" type="Node" parent="." unique_id=595784144]
 
-[node name="enemy" parent="." unique_id=1911787593 instance=ExtResource("3_p57ef")]
-position = Vector2(192, 141)
+[node name="enemy" parent="enemies" unique_id=1911787593 instance=ExtResource("3_p57ef")]
+position = Vector2(511.00012, 246.99998)
+
+[node name="enemy2" parent="enemies" unique_id=1148737531 instance=ExtResource("3_p57ef")]
+position = Vector2(248.00012, 163.99998)
+
+[node name="enemy3" parent="enemies" unique_id=127689188 instance=ExtResource("3_p57ef")]
+position = Vector2(680.0001, 240.99998)
+
+[node name="enemy4" parent="enemies" unique_id=1744515925 instance=ExtResource("3_p57ef")]
+position = Vector2(215.00012, 138.99998)
+
+[node name="enemy5" parent="enemies" unique_id=143786273 instance=ExtResource("3_p57ef")]
+position = Vector2(885.0001, 198.99998)
+
+[node name="enemy6" parent="enemies" unique_id=1759926401 instance=ExtResource("3_p57ef")]
+position = Vector2(664.0001, 140.99998)
+
+[node name="enemy7" parent="enemies" unique_id=1895546812 instance=ExtResource("3_p57ef")]
+position = Vector2(499.00012, 139.99998)
+
+[node name="enemy8" parent="enemies" unique_id=311548791 instance=ExtResource("3_p57ef")]
+position = Vector2(259.00012, 109.999985)
+
+[node name="enemy9" parent="enemies" unique_id=1737786965 instance=ExtResource("3_p57ef")]
+position = Vector2(775.0001, 225.99998)
+
+[node name="enemy10" parent="enemies" unique_id=1838697324 instance=ExtResource("3_p57ef")]
+position = Vector2(613, 268.99997)
+
+[node name="enemy11" parent="enemies" unique_id=750151155 instance=ExtResource("3_p57ef")]
+position = Vector2(611, 340)
