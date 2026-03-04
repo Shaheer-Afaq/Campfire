@@ -4,7 +4,7 @@ func _on_start_pressed() -> void:
 	Manager.checkpoints.clear()
 	Manager.last_checkpoint = Manager.initial_position
 	Manager.health = 50
-	get_tree().change_scene_to_file("res://Scenes/game.tscn")
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()

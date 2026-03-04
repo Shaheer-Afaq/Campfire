@@ -23,10 +23,13 @@ rounded = true
 show_percentage = false
 
 [node name="Level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+z_index = -1
 position = Vector2(1387, 137)
 
 [node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
-position = Vector2(-22, 105)
+position = Vector2(-22.999939, 87)
+collision_mask = 3
 
 [node name="enemy" parent="." unique_id=1911787593 instance=ExtResource("3_p57ef")]
-position = Vector2(66, 128)
+position = Vector2(100, 125)
+collision_mask = 3
