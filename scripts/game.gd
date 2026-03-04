@@ -5,4 +5,5 @@ func _ready() -> void:
 	$Player.position = Vector2(180, 300)
 	$"CanvasLayer/Health Bar".max_value = Manager.TOTAL_HEALTH
 func _process(delta: float) -> void:
-	print(Manager.lives)
+	pass
+	#print(Manager.lives)

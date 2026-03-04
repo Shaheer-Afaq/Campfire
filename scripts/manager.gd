@@ -4,7 +4,7 @@ extends Node
 #var enemyScene = preload("res://Scenes/enemy.tscn")
 
 const TOTAL_HEALTH = 40
-const ATTACK_COOLDOWN = 1 #frame
+const ATTACK_COOLDOWN = 5 #frame
 var lives: int = 3
 var health
 var speed :int = 25

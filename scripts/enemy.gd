@@ -8,7 +8,7 @@ var target
 var speed = 30
 var player
 var has_attacked = false
-var attack_cooldown = 0
+var attack_cooldown: int = 0
 
 var attack_sounds = [
 	preload("res://assets/skeleton/sounds/attack1.wav"),
@@ -38,11 +38,11 @@ func _physics_process(delta: float) -> void:
 			if is_player_in_attack_range():
 				player.take_damage(3)
 		
-
-	elif state == State.CHASE:
+	elif state in [State.CHASE]:
 		var player_pos = player.position
 		direction = sign(player_pos.x - position.x)
 		$sprite.flip_h = direction < 0
+		print("chasing")
 		
 		if is_on_wall():
 			$sprite.play("idle")
@@ -50,24 +50,21 @@ func _physics_process(delta: float) -> void:
 		if is_player_in_attack_range():
 			if attack_cooldown == 0:
 				change_state(State.ATTACK)
-		else:
-			velocity.x = direction * speed
+		#elif cooldown == 0:
+			#velocity.x = direction * speed
 		
 		if attack_cooldown > 0: attack_cooldown -= 1
-		#for body in $attack_hitbox.get_overlapping_bodies():
-			#if body.is_in_group("player"):
-				#target = body
-				#change_state(State.ATTACK)
-				#break
 	
 	if state != State.ATTACK:
-		if is_player_in_range():
+		#if is_player_in_range() and not is_player_in_attack_range():
+		if is_player_in_range() :
 			change_state(State.CHASE)
 		else:
 			change_state(State.IDLE)
-			direction = 0
+			#direction = 0
 	
-	velocity.x = direction * 30
+	velocity.x = direction * speed
+		
 	move_and_slide()
 	
 	$attack_hitbox.position.x = -20 if $sprite.flip_h else 20

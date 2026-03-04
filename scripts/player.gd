@@ -35,7 +35,6 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		if velocity.y > 300:
 			change_state(State.DOWN)
-			print(velocity.y)
 		elif velocity.y < 0:
 			change_state(State.UP)
 	else:
