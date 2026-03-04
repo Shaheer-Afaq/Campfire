@@ -8,6 +8,7 @@ var target
 var speed = 30
 var player
 var has_attacked = false
+var attack_cooldown = 0
 
 var attack_sounds = [
 	preload("res://assets/skeleton/sounds/attack1.wav"),
@@ -21,6 +22,7 @@ func _ready() -> void:
 	player = $"../../Player"
 
 func _physics_process(delta: float) -> void:
+	velocity.x = 0
 	if state == State.DIE:
 		return
 	var direction = 0
@@ -35,24 +37,29 @@ func _physics_process(delta: float) -> void:
 			$attacksound.play()
 			if is_player_in_attack_range():
 				player.take_damage(3)
+		
 
 	elif state == State.CHASE:
 		var player_pos = player.position
 		direction = sign(player_pos.x - position.x)
 		$sprite.flip_h = direction < 0
-		velocity.x = direction * speed
-
+		
 		if is_on_wall():
-			velocity.x = 0
+			
 			$sprite.play("idle")
 
 		if is_player_in_attack_range():
-			change_state(State.ATTACK)
-		for body in $attack_hitbox.get_overlapping_bodies():
-			if body.is_in_group("player"):
-				target = body
+			if attack_cooldown == 0:
 				change_state(State.ATTACK)
-				break
+		else:
+			velocity.x = direction * speed
+		
+		if attack_cooldown > 0: attack_cooldown -= 1
+		#for body in $attack_hitbox.get_overlapping_bodies():
+			#if body.is_in_group("player"):
+				#target = body
+				#change_state(State.ATTACK)
+				#break
 	
 	if state != State.ATTACK:
 		if is_player_in_range():
@@ -80,7 +87,7 @@ func take_damage(amount):
 		$deathsound.stream = die_sounds.pick_random()
 		$deathsound.play()
 	else:
-		change_state(State.HURT)
+		hurt_flash()
 
 func change_state(new_state):
 	if state == new_state:
@@ -105,9 +112,10 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	match state:
 		State.ATTACK:
 			has_attacked = false
+			attack_cooldown = 10
 			change_state(State.CHASE)
-		State.HURT:
-			change_state(State.IDLE)
+		#State.HURT:
+			#change_state(State.IDLE)
 		State.DIE:
 			queue_free()
 			
@@ -129,6 +137,7 @@ func hurt_flash():
 func is_player_in_range():
 	for body in $range.get_overlapping_bodies():
 			if body.is_in_group("player"):
+				target = body
 				return true
 	return false
 	

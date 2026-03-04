@@ -211,7 +211,7 @@ radius = 77.1429
 height = 374.28592
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]
-size = Vector2(17.142862, 30.000011)
+size = Vector2(24.285723, 30.000011)
 
 [sub_resource type="AudioStream" id="AudioStream_xwavj"]
 
@@ -249,7 +249,7 @@ position = Vector2(20, 0)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
-position = Vector2(-4.285714, -3.5714293)
+position = Vector2(-7.8571434, -3.5714293)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_nenq2")
 

@@ -13,13 +13,14 @@ var attack_sounds = [
 	preload("res://assets/player/sounds/punch6.wav"),
 	preload("res://assets/player/sounds/punch7.wav")
 ]
-
+var attack_cooldown = 0
 var has_attacked = false
 
 func _ready() -> void:
 	add_to_group("player")
 	position = Manager.last_checkpoint
 	change_state(State.IDLE)
+	#$hitbox.disabled = false
 
 func _physics_process(delta: float) -> void:
 	if state == State.DIE: return
@@ -41,17 +42,22 @@ func _physics_process(delta: float) -> void:
 		if state in [State.UP, State.DOWN]:
 			change_state(State.IDLE)
 
-	if Input.is_action_pressed("attack") and state != State.ATTACK and is_on_floor():
+	if Input.is_action_pressed("attack") and state != State.ATTACK and is_on_floor() and attack_cooldown == 0:
 		change_state(State.ATTACK)
 
+	if attack_cooldown > 0: attack_cooldown -= 1
+
 	if state == State.ATTACK:
-		if $AnimatedSprite2D.frame == 2 and not has_attacked:
+		if $sprite.frame == 2 and not has_attacked:
 			has_attacked = true
 			$attacksound.stream = attack_sounds.pick_random()
 			$attacksound.play()
 			var target = is_enemy_in_attack_range()
 			if target:
 				target.take_damage(3)
+		elif $sprite.frame == 6:
+			$attacksound.stream = attack_sounds.pick_random()
+			$attacksound.play()
 
 	else:
 		var direction := Input.get_axis("left", "right")
@@ -62,16 +68,15 @@ func _physics_process(delta: float) -> void:
 				change_state(State.RUN)
 				if not $footsteps.playing:
 					$footsteps.play()
-				$AnimatedSprite2D.flip_h = velocity.x < 0
+				$sprite.flip_h = velocity.x < 0
 			else:
 				change_state(State.IDLE)
 				$footsteps.stop()
-		else:
-			if direction != 0:
-				$AnimatedSprite2D.flip_h = direction < 0
 
-	$attack_hitbox.position.x = -25 if $AnimatedSprite2D.flip_h else 25
-	$hitbox.position.x = -2 if $AnimatedSprite2D.flip_h else 2
+		$sprite.flip_h = velocity.x < 0
+
+	$attack_hitbox.position.x = -25 if $sprite.flip_h else 25
+	$hitbox.position.x = -2 if $sprite.flip_h else 2
 
 	move_and_slide()
 
@@ -85,7 +90,7 @@ func take_damage(amount):
 	if Manager.health <= 0:
 		change_state(State.DIE)
 	else:
-		change_state(State.HURT)
+		hurt_flash()
 
 func change_state(new_state):
 	if state == new_state:
@@ -94,49 +99,60 @@ func change_state(new_state):
 
 	match state:
 		State.IDLE:
-			$AnimatedSprite2D.play("idle")
+			$sprite.play("idle")
 		State.RUN:
-			$AnimatedSprite2D.play("run")
+			$sprite.play("run")
 		State.UP:
-			$AnimatedSprite2D.play("up")
+			$sprite.play("up")
 		State.DOWN:
-			$AnimatedSprite2D.play("down")
+			$sprite.play("down")
 		State.ATTACK:
-			$AnimatedSprite2D.play(["attack", "attack1"].pick_random())
-		State.HURT:
-			hurt_flash()
+			$sprite.play(["attack", "attack1"].pick_random())
 		State.DIE:
-			$AnimatedSprite2D.play("die")
-			modulate = Color(0.6, 0.0, 0.1, 1.0)
+			$hitbox.disabled = true
+			$sprite.play("die")
+			$deathsound.play(0.0)
+			modulate = Color(1.0, 0.408, 0.399, 1.0)
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match state:
 		State.ATTACK:
 			has_attacked = false
+			attack_cooldown = Manager.ATTACK_COOLDOWN
 			change_state(State.IDLE)
 		State.HURT:
 			change_state(State.IDLE)
 		State.DIE:
-			Manager.lives -= 1
-			get_tree().reload_current_scene()
+			die_fade()
 
 func hurt_flash():
 	var tween = create_tween()
 	tween.tween_property(
-		$AnimatedSprite2D,
+		$sprite,
 		"modulate",
 		Color(0.6, 0.0, 0.1, 1.0),
 		0.05
 	)
 	tween.tween_property(
-		$AnimatedSprite2D,
+		$sprite,
 		"modulate",
 		Color(1, 1, 1),
 		0.2
 	)
-	# Optional: return to IDLE after flash if not handled elsewhere
-	# tween.finished.connect(func(): change_state(State.IDLE))
 
+func die_fade():
+	var tween = create_tween()
+	tween.tween_property(
+		$sprite,
+		"modulate",
+		Color(0.6, 0.0, 0.1, 0.0),
+		1.5
+	)
+	tween.finished.connect(func():
+		Manager.lives -= 1
+		get_tree().reload_current_scene()
+	)
+		
 func is_enemy_in_attack_range():
 	for body in $attack_hitbox.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
