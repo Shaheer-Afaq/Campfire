@@ -8,7 +8,7 @@ const ATTACK_COOLDOWN = 1 #frame
 var lives: int = 3
 var health
 var speed :int = 25
-var jump_velocity: int = -400
+var jump_velocity: int = -500
 var initial_position: Vector2 = Vector2(47, 36)
 var last_checkpoint = initial_position
 var checkpoints = []

@@ -12,9 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://dglpshh2gnebw" path="res://assets/player/Shield.png" id="8_y4r1p"]
 [ext_resource type="AudioStream" uid="uid://bbhwdms6ginwf" path="res://assets/player/sounds/bone_breaking.wav" id="11_d2wvv"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
-size = Vector2(50.000004, 108.33334)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
 atlas = ExtResource("4_y4r1p")
 region = Rect2(0, 0, 128, 128)
@@ -213,7 +210,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 20.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -239,6 +236,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dt7fs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf23h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31cv2")
 }],
 "loop": false,
 "name": &"attack1",
@@ -382,6 +385,9 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
+size = Vector2(50.000004, 108.33334)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
 size = Vector2(37.80069, 26.632301)
 
@@ -390,8 +396,19 @@ size = Vector2(37.80069, 26.632301)
 [node name="Player" type="CharacterBody2D" unique_id=444317631]
 texture_filter = 1
 scale = Vector2(0.6, 0.6)
-collision_mask = 2
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_tuyoq")
+
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=66991449]
+texture_filter = 1
+position = Vector2(-1.1920929e-07, -18.33333)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_tk41t")
+animation = &"attack1"
+autoplay = "idle"
+frame = 9
+frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1728882835]
 zoom = Vector2(3, 3)
@@ -402,16 +419,6 @@ position_smoothing_speed = 6.0
 scale = Vector2(0.6, 0.6)
 shape = SubResource("RectangleShape2D_u8vuu")
 
-[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=66991449]
-texture_filter = 1
-position = Vector2(-1.1920929e-07, -18.33333)
-scale = Vector2(0.8, 0.8)
-sprite_frames = SubResource("SpriteFrames_tk41t")
-animation = &"die"
-autoplay = "idle"
-frame = 8
-frame_progress = 1.0
-
 [node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=279879882]
 stream = ExtResource("7_fjrip")
 volume_db = 20.0
@@ -421,7 +428,7 @@ position = Vector2(25, -10)
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1379499022]
-position = Vector2(8.33333, -1.249999)
+position = Vector2(-1.9073486e-06, -4.583331)
 scale = Vector2(0.97, 0.97)
 shape = SubResource("RectangleShape2D_smehm")
 

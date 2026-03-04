@@ -11,9 +11,6 @@ script = ExtResource("1_lbhrr")
 [node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
 position = Vector2(180, 298)
 
-[node name="Level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
-position = Vector2(1573, 334)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160266530]
 
 [node name="Health Bar" type="ProgressBar" parent="CanvasLayer" unique_id=990927984]
@@ -62,3 +59,6 @@ position = Vector2(613, 268.99997)
 
 [node name="enemy11" parent="enemies" unique_id=750151155 instance=ExtResource("3_p57ef")]
 position = Vector2(611, 340)
+
+[node name="TileMap" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+position = Vector2(1542, 326)

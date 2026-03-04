@@ -22,7 +22,7 @@ func _ready() -> void:
 	player = $"../../Player"
 
 func _physics_process(delta: float) -> void:
-	velocity.x = 0
+	#velocity.x *= 0.88
 	if state == State.DIE:
 		return
 	var direction = 0
@@ -45,7 +45,6 @@ func _physics_process(delta: float) -> void:
 		$sprite.flip_h = direction < 0
 		
 		if is_on_wall():
-			
 			$sprite.play("idle")
 
 		if is_player_in_attack_range():
@@ -97,9 +96,7 @@ func change_state(new_state):
 	match state:
 		State.IDLE:
 			$sprite.play("idle")
-		State.HURT:
-			#$sprite.play("hurt")
-			hurt_flash()
+
 		State.CHASE:
 			$sprite.play("walk")
 		State.ATTACK:

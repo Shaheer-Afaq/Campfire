@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 			var target = is_enemy_in_attack_range()
 			if target:
 				target.take_damage(3)
-		elif $sprite.frame == 6:
+		elif $sprite.frame == 6 and $sprite.animation == "attack1":
 			$attacksound.stream = attack_sounds.pick_random()
 			$attacksound.play()
 
@@ -67,12 +67,12 @@ func _physics_process(delta: float) -> void:
 			if abs(velocity.x) > 30:
 				change_state(State.RUN)
 				if not $footsteps.playing:
-					$footsteps.play()
+					$footsteps.play(0.03)
 				$sprite.flip_h = velocity.x < 0
 			else:
 				change_state(State.IDLE)
 				$footsteps.stop()
-
+		else: $footsteps.stop()
 		$sprite.flip_h = velocity.x < 0
 
 	$attack_hitbox.position.x = -25 if $sprite.flip_h else 25
