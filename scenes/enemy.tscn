@@ -245,12 +245,11 @@ scale = Vector2(0.9999995, 0.9999995)
 shape = SubResource("CapsuleShape2D_xwavj")
 
 [node name="attack_hitbox" type="Area2D" parent="." unique_id=225445508]
-position = Vector2(20, 0)
+position = Vector2(20, -6)
 scale = Vector2(0.99999994, 0.99999994)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_hitbox" unique_id=1064073230]
-position = Vector2(-7.8571434, -3.5714293)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_nenq2")
 

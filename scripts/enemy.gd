@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
-enum State {IDLE, HURT, ATTACK, DIE, CHASE}
-
 var health = 9
-var state = State.IDLE
+var state = "idle"
 var target
 var speed = 30
 var player
 var has_attacked = false
 var attack_cooldown: int = 0
+var direction = 0
+@onready var sprite: AnimatedSprite2D = $sprite
 
 var attack_sounds = [
 	preload("res://assets/skeleton/sounds/attack1.wav"),
@@ -22,95 +22,74 @@ func _ready() -> void:
 	player = $"../../Player"
 
 func _physics_process(delta: float) -> void:
-	#velocity.x *= 0.88
-	if state == State.DIE:
-		return
-	var direction = 0
-			
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		
-	if state == State.ATTACK:
-		if $sprite.frame == 5 and not has_attacked:
-			has_attacked = true
-			$attacksound.stream = attack_sounds.pick_random()
-			$attacksound.play()
-			if is_player_in_attack_range():
-				player.take_damage(3)
-		
-	elif state in [State.CHASE]:
-		var player_pos = player.position
-		direction = sign(player_pos.x - position.x)
-		$sprite.flip_h = direction < 0
-		print("chasing")
-		
-		if is_on_wall():
-			$sprite.play("idle")
-
-		if is_player_in_attack_range():
-			if attack_cooldown == 0:
-				change_state(State.ATTACK)
-		#elif cooldown == 0:
-			#velocity.x = direction * speed
-		
-		if attack_cooldown > 0: attack_cooldown -= 1
 	
-	if state != State.ATTACK:
-		#if is_player_in_range() and not is_player_in_attack_range():
-		if is_player_in_range() :
-			change_state(State.CHASE)
-		else:
-			change_state(State.IDLE)
-			#direction = 0
-	
-	velocity.x = direction * speed
+	match state:
+		"attack":
+			direction = 0
+			sprite.play("attack")
+			if $sprite.frame == 5 and not has_attacked:
+				has_attacked = true
+				$attacksound.stream = attack_sounds.pick_random()
+				$attacksound.play()
+				if is_player_in_attack_range():
+					player.take_damage(3)
+		"idle":
+			direction = 0
+			if is_player_in_range():
+				state = "chase"
+			else:
+				#state = "idle"
+				sprite.play("idle")
 		
-	move_and_slide()
+		"chase":
+			if not is_player_in_range():
+				state = "idle"
+			elif is_player_in_attack_range():
+				state = "attack"
+			else:
+				var player_pos = player.position
+				direction = sign(player_pos.x - position.x)
+				if is_on_wall():
+					sprite.play("idle")
+				else:
+					sprite.play("walk")
+					
+		
 	
+	if direction > 0: sprite.flip_h = false
+	elif direction < 0: sprite.flip_h = true
 	$attack_hitbox.position.x = -20 if $sprite.flip_h else 20
+	velocity.x = direction * speed
+	move_and_slide()
 
 func _process(delta: float) -> void:
-	if health <= 0 and state != State.DIE:
-		change_state(State.DIE)
+	if health <= 0 and state != "die":
+		state = "die"
 
 func take_damage(amount):
-	if state == State.DIE:
+	if state == "die":
 		return
 	health -= amount
 	
 	if health <= 0:
-		change_state(State.DIE)
+		state = "die"
+		modulate = Color(0.6, 0.0, 0.1, 1.0)
+		$sprite.play("die")
 		$deathsound.stream = die_sounds.pick_random()
 		$deathsound.play()
 	else:
 		hurt_flash()
-
-func change_state(new_state):
-	if state == new_state:
-		return
-	state = new_state
-	
-	match state:
-		State.IDLE:
-			$sprite.play("idle")
-
-		State.CHASE:
-			$sprite.play("walk")
-		State.ATTACK:
-			$sprite.play("attack")
-		State.DIE:
-			modulate = Color(0.6, 0.0, 0.1, 1.0)
-			$sprite.play("die")
 			
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match state:
-		State.ATTACK:
-			has_attacked = false
+		"attack":
 			attack_cooldown = 10
-			change_state(State.CHASE)
-		#State.HURT:
-			#change_state(State.IDLE)
-		State.DIE:
+			has_attacked = false
+			state = "chase"
+
+		"die":
 			queue_free()
 			
 func hurt_flash():
