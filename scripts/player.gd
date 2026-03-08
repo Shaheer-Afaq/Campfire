@@ -32,29 +32,33 @@ func _physics_process(delta: float) -> void:
 		state = "jump"
 	
 	var direction := Input.get_axis("left", "right")
+	velocity.x += direction * Manager.speed * delta * 60
 	
-	match state:
-		"jump":
-			if velocity.y < 0:
-				sprite.play("up")
-			elif velocity.y > 0:
-				sprite.play("down")
-			else:
-				state = "idle"
-				
-		"idle":
-			sprite.play("idle")
-			$footsteps.stop()
-			if direction != 0 and not is_on_wall():
-				state = "run"
+	#match state:
+	if state == "jump":
+		if velocity.y < 0:
+			sprite.play("up")
+		elif velocity.y > 0:
+			sprite.play("down")
+		else:
+			state ="idle"
+		#state = "run"
 		
-		"run":
+			
+	if state == "idle":
+		sprite.play("idle")
+		$footsteps.stop()
+		if direction != 0 and not is_on_wall():
+			state = "run"
+	
+	if state == "run":
+		if is_on_floor():
 			sprite.play("run")
-			if not $footsteps.playing:
-				$footsteps.play(0.03)
-			velocity.x += direction * Manager.speed * delta * 60
-			if abs(velocity.x) < 30:
-				state = "idle"
+		if not $footsteps.playing:
+			$footsteps.play(0.03)
+		#velocity.x += direction * Manager.speed * delta * 60
+		if abs(velocity.x) < 30:
+			state = "idle"
 	
 	if direction > 0: sprite.flip_h = false
 	elif direction < 0: sprite.flip_h = true
