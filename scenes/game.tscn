@@ -2,14 +2,13 @@
 
 [ext_resource type="Script" uid="uid://c50hx5fogt87h" path="res://scripts/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bt1ubllbiu0je" path="res://scenes/level.tscn" id="2_iywne"]
-[ext_resource type="PackedScene" uid="uid://diydmv22pw5rb" path="res://scenes/enemy.tscn" id="3_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bhoee4gtuu42d" path="res://scenes/player.tscn" id="4_u5sy4"]
 
 [node name="game" type="Node2D" unique_id=1395681280]
 script = ExtResource("1_lbhrr")
 
 [node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
-position = Vector2(5200, 1000)
+position = Vector2(1308, 181.00002)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160266530]
 
@@ -26,15 +25,6 @@ rounded = true
 show_percentage = false
 
 [node name="enemies" type="Node" parent="." unique_id=595784144]
-
-[node name="enemy" parent="enemies" unique_id=1911787593 instance=ExtResource("3_p57ef")]
-position = Vector2(5465, 1008)
-
-[node name="enemy2" parent="enemies" unique_id=53127394 instance=ExtResource("3_p57ef")]
-position = Vector2(5348, 1008)
-
-[node name="enemy3" parent="enemies" unique_id=106826039 instance=ExtResource("3_p57ef")]
-position = Vector2(5503, 1009)
 
 [node name="TileMap" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
 position = Vector2(1542, 326)

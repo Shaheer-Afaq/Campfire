@@ -30,16 +30,33 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
-		#state = "jump"
+	
+	if Input.is_action_pressed("attack") and state != "attack" and is_on_floor() and attack_cooldown == 0:
+		print("attacked")
+		state = "attack"
+		$sprite.play(["attack", "attack1"].pick_random())
 	
 	var direction := Input.get_axis("left", "right")
 	velocity.x += direction * Manager.speed * delta * 60
 	
-	#if state == "jump":
-	if velocity.y < 0:
-		sprite.play("up")
-	elif velocity.y > 0:
-		sprite.play("down")
+	if not is_on_floor():
+		if velocity.y > 300 and sprite.animation != "down":
+			$sprite.play("down")
+		elif velocity.y < 0 and sprite.animation != "up":
+			$sprite.play("up")
+	
+	elif state == "attack":
+		velocity.x *= 0.7 if abs(velocity.x) > 30 else 1
+		if $sprite.frame == 2 and not has_attacked:
+			has_attacked = true
+			$attacksound.stream = attack_sounds.pick_random()
+			$attacksound.play()
+			var target = is_enemy_in_attack_range()
+			if target:
+				target.take_damage(3)
+		elif $sprite.frame == 6 and $sprite.animation == "attack1":
+			$attacksound.stream = attack_sounds.pick_random()
+			$attacksound.play()
 		
 	elif state == "idle":
 		sprite.play("idle")
@@ -54,13 +71,15 @@ func _physics_process(delta: float) -> void:
 			$footsteps.play(0.03)
 		if abs(velocity.x) < 40:
 			state = "idle"
-	
+			
+	if attack_cooldown > 0: attack_cooldown -= 1
 	if direction > 0: sprite.flip_h = false
 	elif direction < 0: sprite.flip_h = true
 	$attack_hitbox.position.x = -25 if $sprite.flip_h else 25
 	$hitbox.position.x = -2 if $sprite.flip_h else 2
-
+	
 	move_and_slide()
+	print(velocity.x)
 
 func _process(delta: float) -> void:
 	$"../CanvasLayer/Health Bar".value = Manager.health
