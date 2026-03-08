@@ -3,7 +3,7 @@ extends CharacterBody2D
 var health = 9
 var state = "idle"
 var target
-var speed = 30
+var speed = 50
 var player
 var has_attacked = false
 var attack_cooldown: int = 0
@@ -40,14 +40,14 @@ func _physics_process(delta: float) -> void:
 			if is_player_in_range():
 				state = "chase"
 			else:
-				#state = "idle"
 				sprite.play("idle")
 		
 		"chase":
 			if not is_player_in_range():
 				state = "idle"
 			elif is_player_in_attack_range():
-				state = "attack"
+				if attack_cooldown == 0:
+					state = "attack"
 			else:
 				var player_pos = player.position
 				direction = sign(player_pos.x - position.x)
@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 					sprite.play("walk")
 					
 		
-	
+	if attack_cooldown > 0: attack_cooldown -= 1
 	if direction > 0: sprite.flip_h = false
 	elif direction < 0: sprite.flip_h = true
 	$attack_hitbox.position.x = -20 if $sprite.flip_h else 20
@@ -85,9 +85,10 @@ func take_damage(amount):
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match state:
 		"attack":
-			attack_cooldown = 10
+			attack_cooldown = 20
 			has_attacked = false
 			state = "chase"
+			sprite.play("idle")
 
 		"die":
 			queue_free()
