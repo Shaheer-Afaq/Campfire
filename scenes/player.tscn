@@ -385,8 +385,9 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8vuu"]
-size = Vector2(50.000004, 108.33334)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d2wvv"]
+radius = 25.555557
+height = 104.44445
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
 size = Vector2(37.80069, 26.632301)
@@ -394,6 +395,7 @@ size = Vector2(37.80069, 26.632301)
 [sub_resource type="AudioStream" id="AudioStream_y4r1p"]
 
 [node name="Player" type="CharacterBody2D" unique_id=444317631]
+z_index = 2
 texture_filter = 1
 scale = Vector2(0.6, 0.6)
 collision_layer = 2
@@ -405,7 +407,7 @@ texture_filter = 1
 position = Vector2(-1.1920929e-07, -18.33333)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_tk41t")
-animation = &"down"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1728882835]
@@ -413,8 +415,9 @@ zoom = Vector2(2, 2)
 position_smoothing_speed = 6.0
 
 [node name="hitbox" type="CollisionShape2D" parent="." unique_id=51699640]
+position = Vector2(-2, 1.755)
 scale = Vector2(0.6, 0.6)
-shape = SubResource("RectangleShape2D_u8vuu")
+shape = SubResource("CapsuleShape2D_d2wvv")
 
 [node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=279879882]
 stream = ExtResource("7_fjrip")

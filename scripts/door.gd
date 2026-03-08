@@ -1,4 +1,4 @@
-extends Node2D
+extends TileMap
 
 var initial_position
 @export var offset: Vector2
@@ -9,4 +9,4 @@ func _ready():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "position", initial_position + offset, duration)
+	tween.tween_property(self, "position", initial_position + offset * 16, duration)

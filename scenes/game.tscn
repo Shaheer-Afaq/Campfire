@@ -2,14 +2,12 @@
 
 [ext_resource type="Script" uid="uid://c50hx5fogt87h" path="res://scripts/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bt1ubllbiu0je" path="res://scenes/level.tscn" id="2_iywne"]
+[ext_resource type="PackedScene" uid="uid://diydmv22pw5rb" path="res://scenes/enemy.tscn" id="2_p57ef"]
 [ext_resource type="PackedScene" uid="uid://d1rc6wvgjcrb1" path="res://scenes/door.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bhoee4gtuu42d" path="res://scenes/player.tscn" id="4_u5sy4"]
 
 [node name="game" type="Node2D" unique_id=1395681280]
 script = ExtResource("1_lbhrr")
-
-[node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
-position = Vector2(1308, 181.00002)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1160266530]
 
@@ -27,18 +25,33 @@ show_percentage = false
 
 [node name="enemies" type="Node" parent="." unique_id=595784144]
 
-[node name="TileMap" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
-position = Vector2(1542, 326)
+[node name="enemy" parent="enemies" unique_id=1911787593 instance=ExtResource("2_p57ef")]
+position = Vector2(2233, 874)
 
-[node name="door" parent="." unique_id=1359832877 instance=ExtResource("4_lbhrr")]
-position = Vector2(399, 360)
-offset = Vector2(200, 0)
-duration = 2.0
+[node name="Player" parent="." unique_id=444317631 instance=ExtResource("4_u5sy4")]
+position = Vector2(1726, 150)
 
-[node name="TileMap" parent="door/sprite" parent_id_path=PackedInt32Array(1359832877, 2059233285) index="0" unique_id=146609269]
-layer_0/tile_data = PackedInt32Array(131070, 196608, 2, 131071, 262144, 2, 65536, 327680, 2)
+[node name="level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
 
-[node name="CollisionShape2D" parent="door/Area2D" parent_id_path=PackedInt32Array(1359832877, 1790981447) index="0" unique_id=78984682]
-position = Vector2(-9, -11)
+[node name="door" parent="." unique_id=787097975 instance=ExtResource("4_lbhrr")]
+position = Vector2(1888, 144)
+layer_0/tile_data = PackedInt32Array(131073, 524288, 5, 131072, 655360, 3, 196607, 655360, 3, 196606, 655360, 3, 196605, 655360, 3, 196604, 655360, 3, 196603, 655360, 3, 196602, 393216, 5)
+offset = Vector2(8, 0)
+duration = 0.3
+
+[node name="Area2D" parent="door" index="1" unique_id=1790981447]
+position = Vector2(-7.41, -7.545)
+scale = Vector2(1.5, 1.5)
+
+[node name="door2" parent="." unique_id=1833781740 instance=ExtResource("4_lbhrr")]
+position = Vector2(1888, 224)
+layer_0/tile_data = PackedInt32Array(65538, 393216, 1610612741, 2, 655360, 1610612739, -65534, 655360, 1610612739, -131070, 655360, 1610612739, -196606, 524288, 1610612741)
+offset = Vector2(0, -5)
+duration = 0.3
+
+[node name="Area2D" parent="door2" index="1" unique_id=1790981447]
+position = Vector2(-7.76, -87.53)
+scale = Vector2(1.5, 1.5)
 
 [editable path="door"]
+[editable path="door2"]

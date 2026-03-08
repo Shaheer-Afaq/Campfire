@@ -40,6 +40,7 @@ func _physics_process(delta: float) -> void:
 	velocity.x += direction * Manager.speed * delta * 60
 	
 	if not is_on_floor():
+		$footsteps.stop()
 		if velocity.y > 300 and sprite.animation != "down":
 			$sprite.play("down")
 		elif velocity.y < 0 and sprite.animation != "up":
@@ -76,7 +77,7 @@ func _physics_process(delta: float) -> void:
 	if direction > 0: sprite.flip_h = false
 	elif direction < 0: sprite.flip_h = true
 	$attack_hitbox.position.x = -25 if $sprite.flip_h else 25
-	$hitbox.position.x = -2 if $sprite.flip_h else 2
+	$hitbox.position.x = 2 if $sprite.flip_h else -2
 	
 	move_and_slide()
 	print(velocity.x)
