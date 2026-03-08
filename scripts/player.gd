@@ -22,6 +22,7 @@ func _ready() -> void:
 	position = Manager.last_checkpoint
 
 func _physics_process(delta: float) -> void:
+	if state == "die": return
 	velocity.x *= 0.88
 
 	if not is_on_floor():
@@ -29,35 +30,29 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
-		state = "jump"
+		#state = "jump"
 	
 	var direction := Input.get_axis("left", "right")
 	velocity.x += direction * Manager.speed * delta * 60
 	
-	#match state:
-	if state == "jump":
-		if velocity.y < 0:
-			sprite.play("up")
-		elif velocity.y > 0:
-			sprite.play("down")
-		else:
-			state ="idle"
-		#state = "run"
+	#if state == "jump":
+	if velocity.y < 0:
+		sprite.play("up")
+	elif velocity.y > 0:
+		sprite.play("down")
 		
-			
-	if state == "idle":
+	elif state == "idle":
 		sprite.play("idle")
 		$footsteps.stop()
 		if direction != 0 and not is_on_wall():
 			state = "run"
 	
-	if state == "run":
+	elif state == "run":
 		if is_on_floor():
 			sprite.play("run")
 		if not $footsteps.playing:
 			$footsteps.play(0.03)
-		#velocity.x += direction * Manager.speed * delta * 60
-		if abs(velocity.x) < 30:
+		if abs(velocity.x) < 40:
 			state = "idle"
 	
 	if direction > 0: sprite.flip_h = false
@@ -76,6 +71,10 @@ func take_damage(amount):
 	Manager.health -= amount
 	if Manager.health <= 0:
 		state = "die"
+		$hitbox.disabled = true
+		$sprite.play("die")
+		$deathsound.play(0.0)
+		modulate = Color(1.0, 0.408, 0.399, 1.0)
 	else:
 		hurt_flash()
 
@@ -85,8 +84,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			has_attacked = false
 			attack_cooldown = Manager.ATTACK_COOLDOWN
 			state = "idle"
-		"hurt":
-			state = "idle"
+
 		"die":
 			die_fade()
 

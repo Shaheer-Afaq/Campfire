@@ -30,5 +30,11 @@ show_percentage = false
 [node name="enemy" parent="enemies" unique_id=1911787593 instance=ExtResource("3_p57ef")]
 position = Vector2(5465, 1008)
 
+[node name="enemy2" parent="enemies" unique_id=53127394 instance=ExtResource("3_p57ef")]
+position = Vector2(5348, 1008)
+
+[node name="enemy3" parent="enemies" unique_id=106826039 instance=ExtResource("3_p57ef")]
+position = Vector2(5503, 1009)
+
 [node name="TileMap" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
 position = Vector2(1542, 326)
