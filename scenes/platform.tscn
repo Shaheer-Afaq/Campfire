@@ -1,13 +1,10 @@
-[gd_scene format=3 uid="uid://d1rc6wvgjcrb1"]
+[gd_scene format=3 uid="uid://bxq5o37jj1vqt"]
 
-[ext_resource type="Script" uid="uid://cgbx7plq36qw" path="res://scripts/door.gd" id="1_nlgqw"]
-[ext_resource type="Texture2D" uid="uid://cqj4vcives873" path="res://assets/level/Assets.png" id="2_uvdjg"]
+[ext_resource type="Texture2D" uid="uid://cqj4vcives873" path="res://assets/level/Assets.png" id="1_ba0x2"]
+[ext_resource type="Script" uid="uid://comr25rnuf5mh" path="res://scripts/platform.gd" id="2_nlgqw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nlgqw"]
-size = Vector2(64, 64)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uvdjg"]
-texture = ExtResource("2_uvdjg")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nlgqw"]
+texture = ExtResource("1_ba0x2")
 2:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
@@ -352,28 +349,20 @@ texture = ExtResource("2_uvdjg")
 21:3/0 = 0
 7:2/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_83dcw"]
-sources/0 = SubResource("TileSetAtlasSource_uvdjg")
+[sub_resource type="TileSet" id="TileSet_507ja"]
+sources/0 = SubResource("TileSetAtlasSource_nlgqw")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_la1wf"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_507ja"]
 size = Vector2(16, 16)
 
-[node name="door" type="AnimatableBody2D" unique_id=470905140]
+[node name="platform" type="AnimatableBody2D" unique_id=1387556723]
 texture_filter = 1
-script = ExtResource("1_nlgqw")
+script = ExtResource("2_nlgqw")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1790981447]
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=78984682]
-shape = SubResource("RectangleShape2D_nlgqw")
-
-[node name="TileMap" type="TileMap" parent="." unique_id=600262053]
-tile_set = SubResource("TileSet_83dcw")
+[node name="TileMap" type="TileMap" parent="." unique_id=1683852336]
+tile_set = SubResource("TileSet_507ja")
 format = 2
 layer_0/name = "main"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1402033474]
-shape = SubResource("RectangleShape2D_la1wf")
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=861072011]
+shape = SubResource("RectangleShape2D_507ja")

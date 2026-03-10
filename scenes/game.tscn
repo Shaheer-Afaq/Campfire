@@ -4,6 +4,20 @@
 [ext_resource type="PackedScene" uid="uid://bt1ubllbiu0je" path="res://scenes/level.tscn" id="2_iywne"]
 [ext_resource type="PackedScene" uid="uid://diydmv22pw5rb" path="res://scenes/enemy.tscn" id="2_p57ef"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lnu2h"]
+bg_color = Color(0, 0, 0, 0.5803922)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbhrr"]
+bg_color = Color(0.67998266, 0, 0.018264176, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [node name="game" type="Node2D" unique_id=1395681280]
 script = ExtResource("1_lbhrr")
 
@@ -11,13 +25,13 @@ script = ExtResource("1_lbhrr")
 
 [node name="Health Bar" type="ProgressBar" parent="CanvasLayer" unique_id=990927984]
 modulate = Color(1, 0, 0, 1)
-offset_left = 276.0
-offset_top = 560.0
-offset_right = 876.0
-offset_bottom = 610.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 389.0
+offset_bottom = 74.0
 scale = Vector2(1, 0.64000034)
-max_value = 50.0
-value = 25.0
+theme_override_styles/background = SubResource("StyleBoxFlat_lnu2h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lbhrr")
 rounded = true
 show_percentage = false
 

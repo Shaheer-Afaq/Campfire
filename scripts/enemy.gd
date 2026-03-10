@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var health = 10
 var speed = 100
-var damage = 20
+var damage = 30
 var state = "idle"
 var target
 var has_attacked = false
