@@ -4,15 +4,7 @@ const GRAVITY = 2000
 
 enum State {IDLE, RUN, ATTACK, HURT, DIE, UP, DOWN}
 var state = "idle"
-var attack_sounds = [
-	preload("res://assets/player/sounds/punch1.wav"),
-	preload("res://assets/player/sounds/punch2.wav"),
-	preload("res://assets/player/sounds/punch3.wav"),
-	preload("res://assets/player/sounds/punch4.wav"),
-	preload("res://assets/player/sounds/punch5.wav"),
-	preload("res://assets/player/sounds/punch6.wav"),
-	preload("res://assets/player/sounds/punch7.wav")
-]
+
 var attack_cooldown = 0
 var has_attacked = false
 @onready var sprite: AnimatedSprite2D = $sprite
@@ -50,13 +42,13 @@ func _physics_process(delta: float) -> void:
 		velocity.x *= 0.7 if abs(velocity.x) > 30 else 1
 		if $sprite.frame == 2 and not has_attacked:
 			has_attacked = true
-			$attacksound.stream = attack_sounds.pick_random()
+			$attacksound.stream = Manager.attack_sounds.pick_random()
 			$attacksound.play()
 			var target = is_enemy_in_attack_range()
 			if target:
 				target.take_damage(3)
 		elif $sprite.frame == 6 and $sprite.animation == "attack1":
-			$attacksound.stream = attack_sounds.pick_random()
+			$attacksound.stream = Manager.attack_sounds.pick_random()
 			$attacksound.play()
 		
 	elif state == "idle":
@@ -68,11 +60,16 @@ func _physics_process(delta: float) -> void:
 	elif state == "run":
 		if is_on_floor():
 			sprite.play("run")
-		if not $footsteps.playing:
-			$footsteps.play(0.03)
+			if !$footsteps.playing and sprite.frame in [2,6]:
+				$footsteps.stream = Manager.footsteps.pick_random()
+				$footsteps.play()
+			
 		if abs(velocity.x) < 40:
 			state = "idle"
-			
+	
+	if !$footsteps.playing and sprite.animation == "run" and sprite.frame in [2,6]:
+		$footsteps.stream = Manager.footsteps.pick_random()
+		$footsteps.play()
 	if attack_cooldown > 0: attack_cooldown -= 1
 	if direction > 0: sprite.flip_h = false
 	elif direction < 0: sprite.flip_h = true
@@ -81,10 +78,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	print(velocity.x)
-
-func _process(delta: float) -> void:
-	$"../CanvasLayer/Health Bar".value = Manager.health
-
+		
 func take_damage(amount):
 	if state == "die":
 		return
@@ -93,8 +87,9 @@ func take_damage(amount):
 		state = "die"
 		$hitbox.disabled = true
 		$sprite.play("die")
-		$deathsound.play(0.0)
-		modulate = Color(1.0, 0.408, 0.399, 1.0)
+		$deathsound.play(0.1)
+		$footsteps.stop()
+		#modulate = Color(1.0, 0.408, 0.399, 1.0)
 	else:
 		hurt_flash()
 
@@ -104,10 +99,9 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			has_attacked = false
 			attack_cooldown = Manager.ATTACK_COOLDOWN
 			state = "idle"
-
 		"die":
 			die_fade()
-
+			
 func hurt_flash():
 	var tween = create_tween()
 	tween.tween_property(
@@ -128,12 +122,16 @@ func die_fade():
 	tween.tween_property(
 		$sprite,
 		"modulate",
-		Color(0.6, 0.0, 0.1, 0.0),
-		1.5
+		Color(1.0, 1.0, 1.0, 0.0),
+		0.5
 	)
 	tween.finished.connect(func():
 		Manager.lives -= 1
-		get_tree().reload_current_scene()
+		if Manager.lives <= 0:
+			get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")
+			queue_free()
+		else:
+			respawn()
 	)
 		
 func is_enemy_in_attack_range():
@@ -141,3 +139,17 @@ func is_enemy_in_attack_range():
 		if body.is_in_group("enemies"):
 			return body
 	return false
+
+func respawn():
+	Manager.health = Manager.TOTAL_HEALTH
+	position = Manager.last_checkpoint
+	state = "idle"
+	$hitbox.disabled = false
+	var tween = create_tween()
+	tween.tween_property(
+		$sprite,
+		"modulate",
+		Color(1.0, 1.0, 1.0, 1.0),
+		0.5
+	)
+	

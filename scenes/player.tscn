@@ -7,10 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://xtnw2p1kfnlf" path="res://assets/player/Idle.png" id="5_smehm"]
 [ext_resource type="Texture2D" uid="uid://el8p1vl3qa5k" path="res://assets/player/Dead.png" id="5_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://dgglmmn86pww2" path="res://assets/player/Run.png" id="6_smehm"]
-[ext_resource type="AudioStream" uid="uid://054c1j6dvysc" path="res://assets/player/footsteps.mp3" id="7_fjrip"]
 [ext_resource type="Texture2D" uid="uid://bkvmnwdxqytdb" path="res://assets/player/Jump.png" id="7_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://dglpshh2gnebw" path="res://assets/player/Shield.png" id="8_y4r1p"]
-[ext_resource type="AudioStream" uid="uid://bbhwdms6ginwf" path="res://assets/player/sounds/bone_breaking.wav" id="11_d2wvv"]
+[ext_resource type="AudioStream" uid="uid://c54sh1jqixnj6" path="res://assets/sounds/player/die.wav" id="10_y4r1p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
 atlas = ExtResource("4_y4r1p")
@@ -400,14 +399,14 @@ texture_filter = 1
 scale = Vector2(0.6, 0.6)
 collision_layer = 2
 collision_mask = 3
+floor_stop_on_slope = false
 script = ExtResource("1_tuyoq")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=66991449]
-texture_filter = 1
 position = Vector2(-1.1920929e-07, -18.33333)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_tk41t")
-animation = &"idle"
+animation = &"run"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1728882835]
@@ -419,10 +418,6 @@ position = Vector2(-2, 1.755)
 scale = Vector2(0.6, 0.6)
 shape = SubResource("CapsuleShape2D_d2wvv")
 
-[node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=279879882]
-stream = ExtResource("7_fjrip")
-volume_db = 20.0
-
 [node name="attack_hitbox" type="Area2D" parent="." unique_id=2025289131]
 position = Vector2(25, -10)
 collision_mask = 4
@@ -432,6 +427,8 @@ position = Vector2(-1.9073486e-06, -4.583331)
 scale = Vector2(0.97, 0.97)
 shape = SubResource("RectangleShape2D_smehm")
 
+[node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=279879882]
+
 [node name="attacksound" type="AudioStreamPlayer2D" parent="." unique_id=1055429868]
 scale = Vector2(1.4285713, 1.4285713)
 stream = SubResource("AudioStream_y4r1p")
@@ -439,7 +436,7 @@ volume_db = -5.0
 
 [node name="deathsound" type="AudioStreamPlayer2D" parent="." unique_id=917847169]
 scale = Vector2(1.4285715, 1.4285715)
-stream = ExtResource("11_d2wvv")
+stream = ExtResource("10_y4r1p")
 
 [connection signal="animation_finished" from="sprite" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
