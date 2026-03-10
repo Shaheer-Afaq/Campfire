@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
-	Manager.health = 50
-
+	$"CanvasLayer/Health Bar".max_value = Manager.TOTAL_HEALTH
+	
 func _process(delta: float) -> void:
-	pass
+	$"CanvasLayer/Health Bar".value = Manager.health

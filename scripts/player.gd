@@ -1,100 +1,184 @@
-extends CharacterBody2D 
+extends CharacterBody2D
 
 const GRAVITY = 2000
 
-enum State {IDLE, RUN, ATTACK, HURT, DIE}
-var state = State.IDLE
+var state = "idle"
+
+var attack_cooldown = 0
+var has_attacked = false
+var direction
+@onready var sprite: AnimatedSprite2D = $sprite
 
 func _ready() -> void:
 	add_to_group("player")
 	position = Manager.last_checkpoint
-	change_state(State.IDLE)
 
 func _physics_process(delta: float) -> void:
+	if state == "die": return
 	velocity.x *= 0.88
+
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
+
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
-
-	if Input.is_action_just_pressed("attack") and state != State.ATTACK:
-		change_state(State.ATTACK)
-		$attack.play(0.0)
-
-		for body in $attack_hitbox.get_overlapping_bodies():
-			if body.is_in_group("enemies"):
-				body.take_damage()
-
-	if state != State.ATTACK:
-		var direction := Input.get_axis("left", "right")
-		velocity.x += direction * Manager.speed * delta * 60
-		
-		if abs(velocity.x) > 30:
-			change_state(State.RUN)
-			if not $footsteps.playing and is_on_floor():
-				$footsteps.play()
-			$AnimatedSprite2D.flip_h = velocity.x < 0
-		else:
-			change_state(State.IDLE)
-			$footsteps.stop()
+		state = "idle"
 	
-	$attack_hitbox.position.x = -25 if $AnimatedSprite2D.flip_h else 25
+	elif Input.is_action_pressed("shield") and is_on_floor() and state != "attack":
+		state = "shield"
+		
+	elif Input.is_action_pressed("attack") and state != "attack" and is_on_floor() and attack_cooldown == 0:
+		state = "attack"
+		$sprite.play(["attack", "attack1"].pick_random())
+	
+	if Input.is_action_just_released("shield"):
+		state = "idle"
+	
+	direction = Input.get_axis("left", "right")
+	
+	if !(state in ["shield", "attack"]): velocity.x += direction * Manager.speed * delta * 60
+	else: velocity.x *= 0.9
+	
+	if not is_on_floor():
+		$footsteps.stop()
+		if velocity.y > 300 and sprite.animation != "down":
+			$sprite.play("down")
+		elif velocity.y < 0 and sprite.animation != "up":
+			$sprite.play("up")
+			
+	elif state == "shield":
+		$sprite.play("shield")
+		
+	elif state == "attack":
+		if $sprite.frame == 2 and not has_attacked:
+			has_attacked = true
+			play_random_punch_sound()
+			var target = is_enemy_in_attack_range()
+			if target:
+				target.take_damage(4, "", "")
+		elif $sprite.frame == 6 and $sprite.animation == "attack1":
+			play_random_punch_sound()
+		
+	elif state == "idle":
+		sprite.play("idle")
+		$footsteps.stop()
+		if direction != 0 and not is_on_wall():
+			state = "run"
+	
+	elif state == "run":
+		if is_on_floor():
+			sprite.play("run")
+			if !$footsteps.playing and sprite.frame in [2,6]:
+				$footsteps.stream = Manager.footsteps.pick_random()
+				$footsteps.play()
+			
+		if abs(velocity.x) < 40:
+			state = "idle"
+	
+	if !$footsteps.playing and sprite.animation == "run" and sprite.frame in [2,6]:
+		$footsteps.stream = Manager.footsteps.pick_random()
+		$footsteps.play()
+	if attack_cooldown > 0: attack_cooldown -= 1
+	if direction > 0: sprite.flip_h = false
+	elif direction < 0: sprite.flip_h = true
+	$attack_hitbox.position.x = -25 if $sprite.flip_h else 25
+	$hitbox.position.x = 2 if $sprite.flip_h else -2
 	
 	move_and_slide()
-
-func _process(delta: float) -> void:
-	$"../CanvasLayer/Health Bar".value = Manager.health
-
-func take_damage(amount):
-	if state == State.DIE:
+		
+func take_damage(amount, direction, source):
+	if state == "die":
 		return
+	if source != "spikes" and state == "shield" and sprite.flip_h != direction:
+		$shield.play()
+		return
+		
 	Manager.health -= amount
 	if Manager.health <= 0:
-		change_state(State.DIE)
+		state = "die"
+		$hitbox.disabled = true
+		$sprite.play("die")
+		$deathsound.play(0.1)
+		$footsteps.stop()
+		Manager.allow_sounds = false
+		#modulate = Color(1.0, 0.408, 0.399, 1.0)
 	else:
-		change_state(State.HURT)
-
-func change_state(new_state):
-	if state == new_state:
-		return
-	state = new_state
-	
-	match state:
-		State.IDLE:
-			$AnimatedSprite2D.play("idle")
-		State.RUN:
-			$AnimatedSprite2D.play("run")
-		State.ATTACK:
-			$AnimatedSprite2D.play("attack")
-		State.HURT:
-			hurt_flash()
-		State.DIE:
-			$AnimatedSprite2D.play("die")
+		play_random_punch_sound()
+		hurt_flash()
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match state:
-		State.ATTACK:
-			change_state(State.IDLE)
-		State.HURT:
-			change_state(State.IDLE)
-		State.DIE: 
-			Manager.lives -= 1
-			get_tree().reload_current_scene()
-
+		"attack":
+			has_attacked = false
+			attack_cooldown = Manager.ATTACK_COOLDOWN
+			state = "idle"
+		"die":
+			die_fade()
+			
 func hurt_flash():
 	var tween = create_tween()
-	
 	tween.tween_property(
-		$AnimatedSprite2D,
+		$sprite,
 		"modulate",
 		Color(0.6, 0.0, 0.1, 1.0),
 		0.05
 	)
 	tween.tween_property(
-		$AnimatedSprite2D,
+		$sprite,
 		"modulate",
 		Color(1, 1, 1),
 		0.2
 	)
-	#tween.finished.connect(func(): change_state(State.IDLE))
-	tween.finished.connect(func(): print(1))
+
+func die_fade():
+	var tween = create_tween()
+	tween.tween_property(
+		$sprite,
+		"modulate",
+		Color(1.0, 1.0, 1.0, 0.0),
+		0.5
+	)
+	tween.finished.connect(func():
+		Manager.lives -= 1
+		if Manager.lives <= 0:
+			get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")
+			queue_free()
+		else:
+			tween.kill()
+			respawn()
+	)
+		
+func is_enemy_in_attack_range():
+	for body in $attack_hitbox.get_overlapping_bodies():
+		if body.is_in_group("enemies"):
+			return body
+	return false
+
+func respawn():
+	#modulate = Color(1.0, 1.0, 1.0, 0.0)
+	velocity.x = 0
+	Manager.allow_sounds = false
+	Manager.health = Manager.TOTAL_HEALTH
+	position = Manager.last_checkpoint
+	state = "idle"
+	$hitbox.disabled = false
+	var tween = create_tween()
+	tween.tween_property(
+		$sprite,
+		"modulate",
+		Color(0.0, 0.0, 0.0, 0.0),
+		0.0
+	)
+	tween.tween_property(
+		$sprite,
+		"modulate",
+		Color(1.0, 1.0, 1.0, 1.0),
+		0.3
+	)
+	tween.finished.connect(func():
+		Manager.allow_sounds = true
+	)
+	
+func play_random_punch_sound():
+	$attacksound.stream = Manager.attack_sounds.pick_random()
+	$attacksound.play()
