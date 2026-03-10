@@ -31,7 +31,8 @@ const enemy_die_sounds = [
 const player_die_sounds = [
 	preload("res://assets/sounds/player/die.wav")
 ]
-const TOTAL_HEALTH = 5
+
+const TOTAL_HEALTH = 100
 const ATTACK_COOLDOWN = 5 #frame
 var health
 var checkpoints = []
@@ -40,12 +41,14 @@ var speed :int = 25
 var jump_velocity: int = -500
 var initial_position: Vector2 = Vector2(1700, 150)
 var last_checkpoint = initial_position
+var allow_sounds = false
+var Player
+var Game
 
 func restart():
-	var Player = player.instantiate()
-	var Game = game.instantiate()
+	Player = player.instantiate()
+	Game = game.instantiate()
 	checkpoints.clear()
-	print("hi")
 	lives = 2
 	get_tree().change_scene_to_node(Game)
 	Game.add_child(Player)

@@ -2,11 +2,11 @@ extends CharacterBody2D
 
 const GRAVITY = 2000
 
-enum State {IDLE, RUN, ATTACK, HURT, DIE, UP, DOWN}
 var state = "idle"
 
 var attack_cooldown = 0
 var has_attacked = false
+var direction
 @onready var sprite: AnimatedSprite2D = $sprite
 
 func _ready() -> void:
@@ -22,14 +22,22 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
+		state = "idle"
 	
-	if Input.is_action_pressed("attack") and state != "attack" and is_on_floor() and attack_cooldown == 0:
-		print("attacked")
+	elif Input.is_action_pressed("shield") and is_on_floor() and state != "attack":
+		state = "shield"
+		
+	elif Input.is_action_pressed("attack") and state != "attack" and is_on_floor() and attack_cooldown == 0:
 		state = "attack"
 		$sprite.play(["attack", "attack1"].pick_random())
 	
-	var direction := Input.get_axis("left", "right")
-	velocity.x += direction * Manager.speed * delta * 60
+	if Input.is_action_just_released("shield"):
+		state = "idle"
+	
+	direction = Input.get_axis("left", "right")
+	
+	if !(state in ["shield", "attack"]): velocity.x += direction * Manager.speed * delta * 60
+	else: velocity.x *= 0.9
 	
 	if not is_on_floor():
 		$footsteps.stop()
@@ -37,19 +45,19 @@ func _physics_process(delta: float) -> void:
 			$sprite.play("down")
 		elif velocity.y < 0 and sprite.animation != "up":
 			$sprite.play("up")
-	
+			
+	elif state == "shield":
+		$sprite.play("shield")
+		
 	elif state == "attack":
-		velocity.x *= 0.7 if abs(velocity.x) > 30 else 1
 		if $sprite.frame == 2 and not has_attacked:
 			has_attacked = true
-			$attacksound.stream = Manager.attack_sounds.pick_random()
-			$attacksound.play()
+			play_random_punch_sound()
 			var target = is_enemy_in_attack_range()
 			if target:
-				target.take_damage(3)
+				target.take_damage(4, "", "")
 		elif $sprite.frame == 6 and $sprite.animation == "attack1":
-			$attacksound.stream = Manager.attack_sounds.pick_random()
-			$attacksound.play()
+			play_random_punch_sound()
 		
 	elif state == "idle":
 		sprite.play("idle")
@@ -77,11 +85,14 @@ func _physics_process(delta: float) -> void:
 	$hitbox.position.x = 2 if $sprite.flip_h else -2
 	
 	move_and_slide()
-	print(velocity.x)
 		
-func take_damage(amount):
+func take_damage(amount, direction, source):
 	if state == "die":
 		return
+	if source != "spikes" and state == "shield" and sprite.flip_h != direction:
+		$shield.play()
+		return
+		
 	Manager.health -= amount
 	if Manager.health <= 0:
 		state = "die"
@@ -89,8 +100,10 @@ func take_damage(amount):
 		$sprite.play("die")
 		$deathsound.play(0.1)
 		$footsteps.stop()
+		Manager.allow_sounds = false
 		#modulate = Color(1.0, 0.408, 0.399, 1.0)
 	else:
+		play_random_punch_sound()
 		hurt_flash()
 
 func _on_animated_sprite_2d_animation_finished() -> void:
@@ -131,6 +144,7 @@ func die_fade():
 			get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")
 			queue_free()
 		else:
+			tween.kill()
 			respawn()
 	)
 		
@@ -141,6 +155,9 @@ func is_enemy_in_attack_range():
 	return false
 
 func respawn():
+	#modulate = Color(1.0, 1.0, 1.0, 0.0)
+	velocity.x = 0
+	Manager.allow_sounds = false
 	Manager.health = Manager.TOTAL_HEALTH
 	position = Manager.last_checkpoint
 	state = "idle"
@@ -149,7 +166,19 @@ func respawn():
 	tween.tween_property(
 		$sprite,
 		"modulate",
+		Color(0.0, 0.0, 0.0, 0.0),
+		0.0
+	)
+	tween.tween_property(
+		$sprite,
+		"modulate",
 		Color(1.0, 1.0, 1.0, 1.0),
-		0.5
+		0.3
+	)
+	tween.finished.connect(func():
+		Manager.allow_sounds = true
 	)
 	
+func play_random_punch_sound():
+	$attacksound.stream = Manager.attack_sounds.pick_random()
+	$attacksound.play()

@@ -414,7 +414,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_la1wf")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nlgqw"]
-size = Vector2(56, 52.75)
+size = Vector2(74, 52.75)
 
 [node name="door" type="TileMap" unique_id=787097975]
 texture_filter = 1

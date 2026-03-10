@@ -1,24 +1,25 @@
 extends CharacterBody2D
 
-var health = 9
+var health = 10
+var speed = 100
+var damage = 20
 var state = "idle"
 var target
-var speed = 100
-var player
 var has_attacked = false
 var attack_cooldown: int = 0
 var direction = 0
 var attacks = ["attack1","attack2","attack3"]
-var ready_for_sound = false
 @onready var sprite: AnimatedSprite2D = $sprite
 
 
 func _ready() -> void:
 	add_to_group("enemies")
-	player = $"../../Player"
-	scale = Vector2.ONE * randf_range(0.6, 0.8)
-	await get_tree().process_frame
-	ready_for_sound = true
+	scale.x = randf_range(0.6, 0.85)
+	scale.y = scale.x
+	$chargesound.pitch_scale = remap(scale.x, 0.6, 0.85, 1.4, 0.6)
+	speed *= remap(scale.x, 0.6, 0.85, 1.3, 0.8)
+	health *= remap(scale.x, 0.6, 0.85, 0.8, 1.6)
+	damage *= remap(scale.x, 0.6, 0.85, 0.8, 1.6)
 
 func _physics_process(delta: float) -> void:
 	if state == "die": return
@@ -27,15 +28,14 @@ func _physics_process(delta: float) -> void:
 	
 	match state:
 		"attack":
-			direction = 0
 			if !(sprite.animation in attacks):
 				sprite.play(attacks.pick_random())
 			if $sprite.frame == 3 and not has_attacked:
 				has_attacked = true
-				$attacksound.stream = Manager.attack_sounds.pick_random()
-				$attacksound.play()
 				if is_player_in_attack_range():
-					player.take_damage(3)
+					Manager.Player.take_damage(3, sprite.flip_h, "enemy")
+					
+			direction = 0
 		"idle":
 			direction = 0
 			if is_player_in_range():
@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 				if attack_cooldown == 0:
 					state = "attack"
 			else:
-				var player_pos = player.position
+				var player_pos = Manager.Player.position
 				direction = sign(player_pos.x - position.x)
 				if is_on_wall():
 					sprite.play("idle")
@@ -74,9 +74,10 @@ func _process(delta: float) -> void:
 	if health <= 0 and state != "die":
 		state = "die"
 
-func take_damage(amount):
+func take_damage(amount, direction, source):
 	if state == "die":
 		return
+	
 	health -= amount
 	
 	if health <= 0:
@@ -139,6 +140,5 @@ func is_player_in_attack_range():
 
 
 func _on_range_body_entered(body: Node2D) -> void:
-	if ready_for_sound and !$chargesound.playing and body.is_in_group("player"):
-		$chargesound.pitch_scale = remap(scale.x, 0.6, 0.8, 1.4, 0.6)
+	if Manager.allow_sounds and !$chargesound.playing and body.is_in_group("player"):
 		$chargesound.play()

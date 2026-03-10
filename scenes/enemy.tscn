@@ -298,7 +298,7 @@ radius = 11.428581
 height = 54.28576
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xwavj"]
-radius = 77.1429
+radius = 115.71435
 height = 551.4289
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nenq2"]

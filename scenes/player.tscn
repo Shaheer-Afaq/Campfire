@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bkvmnwdxqytdb" path="res://assets/player/Jump.png" id="7_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://dglpshh2gnebw" path="res://assets/player/Shield.png" id="8_y4r1p"]
 [ext_resource type="AudioStream" uid="uid://c54sh1jqixnj6" path="res://assets/sounds/player/die.wav" id="10_y4r1p"]
+[ext_resource type="AudioStream" uid="uid://nas7gyixiui5" path="res://assets/sounds/player/block.wav" id="11_d2wvv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
 atlas = ExtResource("4_y4r1p")
@@ -406,8 +407,9 @@ script = ExtResource("1_tuyoq")
 position = Vector2(-1.1920929e-07, -18.33333)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_tk41t")
-animation = &"run"
+animation = &"shield"
 autoplay = "idle"
+frame_progress = 0.36216483
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1728882835]
 zoom = Vector2(2, 2)
@@ -437,6 +439,9 @@ volume_db = -5.0
 [node name="deathsound" type="AudioStreamPlayer2D" parent="." unique_id=917847169]
 scale = Vector2(1.4285715, 1.4285715)
 stream = ExtResource("10_y4r1p")
+
+[node name="shield" type="AudioStreamPlayer2D" parent="." unique_id=919017971]
+stream = ExtResource("11_d2wvv")
 
 [connection signal="animation_finished" from="sprite" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="attack_hitbox" to="." method="_on_attack_hitbox_body_entered"]
