@@ -5,3 +5,9 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	$"CanvasLayer/Health Bar".value = Manager.health
+
+
+func _on_winarea_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		
+		

@@ -17,6 +17,8 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqjtg"]
+
 [node name="game" type="Node2D" unique_id=1395681280]
 script = ExtResource("1_lbhrr")
 
@@ -35,3 +37,11 @@ rounded = true
 show_percentage = false
 
 [node name="level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+
+[node name="winarea" type="Area2D" parent="." unique_id=1560268304]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="winarea" unique_id=926159601]
+position = Vector2(304, 160)
+shape = SubResource("RectangleShape2D_yqjtg")
+
+[connection signal="body_entered" from="winarea" to="." method="_on_winarea_entered"]
