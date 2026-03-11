@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cqj4vcives873" path="res://assets/underground/Assets.png" id="9_8c41q"]
 [ext_resource type="PackedScene" uid="uid://diydmv22pw5rb" path="res://scenes/enemy.tscn" id="9_olg7q"]
 [ext_resource type="PackedScene" uid="uid://bxq5o37jj1vqt" path="res://scenes/platform.tscn" id="10_olg7q"]
+[ext_resource type="PackedScene" uid="uid://dki8uvb1vdlca" path="res://scenes/checkpoint.tscn" id="11_t1rx8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2r41h"]
 texture = ExtResource("9_8c41q")
@@ -1704,6 +1705,12 @@ position = Vector2(40, 4)
 
 [node name="TileMap" parent="platforms/platform" index="1" unique_id=1683852336]
 layer_0/tile_data = PackedInt32Array(0, 524288, 268435461, 1, 393216, 6, 2, 393216, 6, 3, 393216, 6, 4, 524288, 5)
+
+[node name="checkpoint" parent="." unique_id=1853765462 instance=ExtResource("11_t1rx8")]
+position = Vector2(328, 160)
+
+[node name="checkpoint2" parent="." unique_id=1308628429 instance=ExtResource("11_t1rx8")]
+position = Vector2(536, 256)
 
 [editable path="doors/door"]
 [editable path="doors/door2"]

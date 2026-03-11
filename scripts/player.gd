@@ -144,7 +144,6 @@ func die_fade():
 			get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")
 			queue_free()
 		else:
-			tween.kill()
 			respawn()
 	)
 		
@@ -155,7 +154,6 @@ func is_enemy_in_attack_range():
 	return false
 
 func respawn():
-	#modulate = Color(1.0, 1.0, 1.0, 0.0)
 	velocity.x = 0
 	Manager.allow_sounds = false
 	Manager.health = Manager.TOTAL_HEALTH

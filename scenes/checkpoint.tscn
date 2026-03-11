@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dki8uvb1vdlca"]
 
+[ext_resource type="Script" uid="uid://3getrspwnk83" path="res://scripts/checkpoint.gd" id="1_vsimk"]
 [ext_resource type="Texture2D" uid="uid://coe3mbxxipuax" path="res://assets/Flag.png" id="1_ywqth"]
 [ext_resource type="AudioStream" uid="uid://bmap4pxk4yxly" path="res://assets/checkpoint.wav" id="2_vsimk"]
 
@@ -9,6 +10,7 @@ size = Vector2(600, 610)
 [node name="checkpoint" type="Area2D" unique_id=1853765462]
 scale = Vector2(0.03, 0.03)
 collision_mask = 2
+script = ExtResource("1_vsimk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=453590486]
 texture = ExtResource("1_ywqth")
