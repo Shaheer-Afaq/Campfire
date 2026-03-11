@@ -12,7 +12,6 @@ const footsteps = [
 	preload("res://assets/sounds/footsteps/foot6.MP3"),
 	preload("res://assets/sounds/footsteps/foot7.MP3"),
 	preload("res://assets/sounds/footsteps/foot8.MP3"),
-	preload("res://assets/sounds/footsteps/foot9.MP3")
 ]
 const attack_sounds = [
 	preload("res://assets/sounds/attacks/punch1.wav"),
@@ -23,7 +22,6 @@ const attack_sounds = [
 	preload("res://assets/sounds/attacks/punch6.wav"),
 	preload("res://assets/sounds/attacks/punch7.wav"),
 	preload("res://assets/sounds/attacks/punch8.wav"),
-	preload("res://assets/sounds/attacks/punch9.wav")
 ]
 const enemy_die_sounds = [
 	preload("res://assets/sounds/enemy/die.mp3")

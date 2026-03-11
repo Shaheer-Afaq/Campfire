@@ -98,7 +98,8 @@ func take_damage(amount, direction, source):
 		state = "die"
 		$hitbox.disabled = true
 		$sprite.play("die")
-		$deathsound.play(0.1)
+		$deathsound.stream = Manager.player_die_sounds.pick_random()
+		$deathsound.play()
 		$footsteps.stop()
 		Manager.allow_sounds = false
 		#modulate = Color(1.0, 0.408, 0.399, 1.0)
