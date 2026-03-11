@@ -39,7 +39,8 @@ var checkpoints = []
 var lives: int
 var speed :int = 25
 var jump_velocity: int = -500
-var initial_position: Vector2 = Vector2(35, 120)
+#var initial_position: Vector2 = Vector2(35, 120)
+var initial_position: Vector2 = Vector2(3824, 1300)
 var last_checkpoint = initial_position
 var allow_sounds = false
 var Player

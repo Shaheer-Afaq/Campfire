@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c50hx5fogt87h" path="res://scripts/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bt1ubllbiu0je" path="res://scenes/level.tscn" id="2_iywne"]
-[ext_resource type="PackedScene" uid="uid://diydmv22pw5rb" path="res://scenes/enemy.tscn" id="2_p57ef"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lnu2h"]
 bg_color = Color(0, 0, 0, 0.5803922)
@@ -34,31 +33,5 @@ theme_override_styles/background = SubResource("StyleBoxFlat_lnu2h")
 theme_override_styles/fill = SubResource("StyleBoxFlat_lbhrr")
 rounded = true
 show_percentage = false
-
-[node name="enemies" type="Node" parent="." unique_id=595784144]
-
-[node name="enemy" parent="enemies" unique_id=1911787593 instance=ExtResource("2_p57ef")]
-position = Vector2(2221, 861)
-
-[node name="enemy2" parent="enemies" unique_id=239811076 instance=ExtResource("2_p57ef")]
-position = Vector2(2302, 873.99994)
-
-[node name="enemy3" parent="enemies" unique_id=1753224839 instance=ExtResource("2_p57ef")]
-position = Vector2(2369, 872)
-
-[node name="enemy4" parent="enemies" unique_id=1889831087 instance=ExtResource("2_p57ef")]
-position = Vector2(2089, 815.99994)
-
-[node name="enemy5" parent="enemies" unique_id=572476920 instance=ExtResource("2_p57ef")]
-position = Vector2(1853, 777)
-
-[node name="enemy6" parent="enemies" unique_id=777698663 instance=ExtResource("2_p57ef")]
-position = Vector2(3083, 1529.0001)
-
-[node name="enemy7" parent="enemies" unique_id=502574820 instance=ExtResource("2_p57ef")]
-position = Vector2(2778, 1529)
-
-[node name="enemy8" parent="enemies" unique_id=2139336699 instance=ExtResource("2_p57ef")]
-position = Vector2(2410.0002, 1484.0001)
 
 [node name="level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]

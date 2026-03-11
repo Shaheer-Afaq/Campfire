@@ -1,18 +1,24 @@
 extends AnimatableBody2D
 
-@export var start_pos: Vector2
-@export var end_pos: Vector2
-@export var duration: float 
-@export var delay: float 
+var start_pos
+@export var offset: Vector2
+@export var duration: float = 1.0
+@export var delay: float = 0.5
 
 func _ready():
-	position = start_pos
+	start_pos = position
+	animate()
 
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if !body.is_in_group("player"):
-		return
-	$Area2D.monitoring = false
-	print("triggered")
-	var tween = create_tween()
-	tween.tween_property(self, "position", end_pos, duration)
+func animate():
+	while true:
+		var tween = create_tween()
+		tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+		tween.tween_property(self, "position", start_pos + offset * 16, duration)
+		await tween.finished
+		await get_tree().create_timer(delay).timeout
+		
+		tween = create_tween()
+		tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+		tween.tween_property(self, "position", start_pos, duration)
+		await tween.finished
+		await get_tree().create_timer(delay).timeout
