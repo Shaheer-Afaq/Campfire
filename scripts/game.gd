@@ -9,5 +9,10 @@ func _process(delta: float) -> void:
 
 func _on_winarea_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		pass
+		Manager.Player.input_enabled =  false
+		$winsound.play()
 		
+
+
+func _on_winsound_finished() -> void:
+	get_tree().change_scene_to_file("res://Scenes/mainmenu.tscn")

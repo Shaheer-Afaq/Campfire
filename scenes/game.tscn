@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c50hx5fogt87h" path="res://scripts/game.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c2m01mok5c8mt" path="res://scenes/level.tscn" id="2_iywne"]
+[ext_resource type="AudioStream" uid="uid://wxh8gba0j0v0" path="res://Assets_/win.wav" id="3_lnu2h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lnu2h"]
 bg_color = Color(0, 0, 0, 0.5803922)
@@ -18,6 +19,7 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqjtg"]
+size = Vector2(58, 20)
 
 [node name="game" type="Node2D" unique_id=1395681280]
 script = ExtResource("1_lbhrr")
@@ -36,12 +38,17 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_lbhrr")
 rounded = true
 show_percentage = false
 
+[node name="level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+
 [node name="winarea" type="Area2D" parent="." unique_id=1560268304]
+position = Vector2(97, -33)
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="winarea" unique_id=926159601]
-position = Vector2(304, 160)
 shape = SubResource("RectangleShape2D_yqjtg")
 
-[node name="level" parent="." unique_id=689653070 instance=ExtResource("2_iywne")]
+[node name="winsound" type="AudioStreamPlayer2D" parent="." unique_id=1784842006]
+stream = ExtResource("3_lnu2h")
+volume_db = -10.0
 
 [connection signal="body_entered" from="winarea" to="." method="_on_winarea_entered"]

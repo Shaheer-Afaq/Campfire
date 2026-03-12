@@ -7,6 +7,7 @@ var state = "idle"
 var attack_cooldown = 0
 var has_attacked = false
 var direction
+var input_enabled = true
 @onready var sprite: AnimatedSprite2D = $sprite
 
 func _ready() -> void:
@@ -20,21 +21,21 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if input_enabled and Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = Manager.jump_velocity
 		state = "idle"
 	
-	elif Input.is_action_pressed("shield") and is_on_floor() and state != "attack":
+	elif input_enabled and Input.is_action_pressed("shield") and is_on_floor() and state != "attack":
 		state = "shield"
 		
-	elif Input.is_action_pressed("attack") and state != "attack" and is_on_floor() and attack_cooldown == 0:
+	elif input_enabled and Input.is_action_pressed("attack") and state != "attack" and is_on_floor() and attack_cooldown == 0:
 		state = "attack"
 		$sprite.play(["attack", "attack1"].pick_random())
 	
 	if Input.is_action_just_released("shield"):
 		state = "idle"
 	
-	direction = Input.get_axis("left", "right")
+	direction = Input.get_axis("left", "right") if input_enabled else 0
 	
 	if !(state in ["shield", "attack"]): velocity.x += direction * Manager.speed * delta * 60
 	else: velocity.x *= 0.9

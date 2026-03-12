@@ -431,11 +431,11 @@ scale = Vector2(0.97, 0.97)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=279879882]
+volume_db = 5.0
 
 [node name="attacksound" type="AudioStreamPlayer2D" parent="." unique_id=1055429868]
 scale = Vector2(1.4285713, 1.4285713)
 stream = SubResource("AudioStream_y4r1p")
-volume_db = -5.0
 
 [node name="deathsound" type="AudioStreamPlayer2D" parent="." unique_id=917847169]
 scale = Vector2(1.4285715, 1.4285715)

@@ -53,5 +53,6 @@ func restart():
 	Game.add_child(Player)
 	last_checkpoint = initial_position
 	Player.respawn()
+	Player.input_enabled = true
 	
 	
