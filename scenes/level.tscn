@@ -1566,6 +1566,9 @@ bg_color = Color(0.21568628, 0.6, 0.6, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8c41q"]
 bg_color = Color(0.20392157, 0.1254902, 0.16862746, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_olg7q"]
+bg_color = Color(0.20392157, 0.1254902, 0.16862746, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8iemx"]
 size = Vector2(64, 112)
 
@@ -1622,6 +1625,14 @@ offset_top = 336.0
 offset_right = 4120.0
 offset_bottom = 1946.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8c41q")
+
+[node name="Panel3" type="Panel" parent="." unique_id=1318581119]
+z_index = -10
+offset_left = 1792.0
+offset_top = 176.0
+offset_right = 1920.0
+offset_bottom = 336.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_olg7q")
 
 [node name="doors" type="Node" parent="." unique_id=863468778]
 
