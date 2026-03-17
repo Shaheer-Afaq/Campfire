@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cqj4vcives873" path="res://assets/underground/Assets.png" id="2_uvdjg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nlgqw"]
-size = Vector2(64, 64)
+size = Vector2(55, 96)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uvdjg"]
 texture = ExtResource("2_uvdjg")
@@ -356,7 +356,7 @@ texture = ExtResource("2_uvdjg")
 sources/0 = SubResource("TileSetAtlasSource_uvdjg")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_la1wf"]
-size = Vector2(16, 16)
+size = Vector2(160, 11)
 
 [node name="door" type="AnimatableBody2D" unique_id=470905140]
 texture_filter = 1
