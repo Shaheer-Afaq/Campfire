@@ -32,14 +32,14 @@ const player_die_sounds = [
 
 const TOTAL_HEALTH = 100
 const ATTACK_COOLDOWN = 5 #frame
-const LIVES = 5
+const LIVES = 10
 
 var health
 var lives: int
 var speed :int = 25
 var jump_velocity: int = -500
-#var initial_position: Vector2 = Vector2(35, 120)
-var initial_position: Vector2 = Vector2(-500, 900)
+var initial_position: Vector2 = Vector2(35, 120)
+#var initial_position: Vector2 = Vector2(-500, 900)
 var last_checkpoint = initial_position
 var allow_sounds = false
 var Player

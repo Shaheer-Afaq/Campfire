@@ -22,7 +22,9 @@ func _ready() -> void:
 	damage *= remap(scale.x, 0.6, 0.85, 0.8, 1.6)
 
 func _physics_process(delta: float) -> void:
-	if state == "die": return
+	if state == "die": 
+		move_and_slide()
+		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
