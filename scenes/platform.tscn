@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://comr25rnuf5mh" path="res://scripts/platform.gd" id="2_nlgqw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_507ja"]
-size = Vector2(78, 6)
+size = Vector2(78, 4)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nlgqw"]
 texture = ExtResource("1_ba0x2")
