@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bxf85bmhw07bm"]
 
 [ext_resource type="Texture2D" uid="uid://kuv762iojtxn" path="res://assets/level/Assets.png" id="1_4oslf"]
-[ext_resource type="Script" uid="uid://b4fmrvb33hw1x" path="res://scripts/end_door.gd" id="1_34qak"]
+[ext_resource type="Script" uid="uid://b4fmrvb33hw1x" path="res://scripts/rotate_door.gd" id="1_34qak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlc13"]
-size = Vector2(20, 39.5)
+size = Vector2(32, 44)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_humjp"]
 texture = ExtResource("1_4oslf")
@@ -351,11 +351,11 @@ texture = ExtResource("1_4oslf")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_humjp")
 
-[node name="End_door" type="AnimatableBody2D" unique_id=1363835396]
+[node name="rotate_door" type="AnimatableBody2D" unique_id=1363835396]
 script = ExtResource("1_34qak")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=966117420]
-collision_mask = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1691276007]
 shape = SubResource("RectangleShape2D_dlc13")
@@ -364,7 +364,6 @@ shape = SubResource("RectangleShape2D_dlc13")
 texture_filter = 1
 tile_set = SubResource("TileSet_l02ey")
 format = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=405943246]
+layer_0/z_index = 4
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
