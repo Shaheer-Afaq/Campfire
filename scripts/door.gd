@@ -16,4 +16,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	$Area2D.monitoring = false
 	print("triggered")
 	var tween = create_tween()
+	var tween2 = create_tween()
 	tween.tween_property(self, "position", initial_position + offset * 16, duration)
+	tween2.tween_property(self, "rotation_degrees", initial_rotation + rotate, duration)
