@@ -1,11 +1,17 @@
 extends AnimatableBody2D
 
-func _ready() -> void:
+var count: int
+
+func _ready():
 	$Area2D.monitoring = true
+	count = 0
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if !body.is_in_group("player"):
-		return
+		return 
 	print("triggered")
+	print(count) 
 	$Area2D.monitoring = false
-	$AnimationPlayer.play("ro-ta-te")
+	$AnimationPlayer.play("rotate")
+	#$AnimationPlayer.autoplay
+	#count += 1

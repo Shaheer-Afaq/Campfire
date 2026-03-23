@@ -39,6 +39,7 @@ var lives: int
 var speed :int = 25
 var jump_velocity: int = -500
 #var initial_position: Vector2 = Vector2(35, 120)
+#var initial_position: Vector2 = Vector2(-300, 900)
 #var initial_position: Vector2 = Vector2(4400, 4500)
 var initial_position: Vector2 = Vector2(2500, -160)
 var last_checkpoint = initial_position
