@@ -356,6 +356,7 @@ texture = ExtResource("1_ba0x2")
 sources/0 = SubResource("TileSetAtlasSource_nlgqw")
 
 [node name="platform" type="AnimatableBody2D" unique_id=1387556723]
+z_index = 2
 texture_filter = 1
 script = ExtResource("2_nlgqw")
 
