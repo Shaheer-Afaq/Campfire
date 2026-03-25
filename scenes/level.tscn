@@ -2003,6 +2003,12 @@ size = Vector2(256.5, 7)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wc255"]
 size = Vector2(496, 7)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmcjb"]
+size = Vector2(560, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_556r4"]
+size = Vector2(704, 8)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gunhw"]
 texture = ExtResource("9_8c41q")
 2:0/0 = 0
@@ -2555,7 +2561,7 @@ layer_7/tile_data = PackedInt32Array(3866794, 983040, 268435465, 3932330, 983040
 z_index = -10
 anchors_preset = -1
 anchor_left = -0.7100694
-anchor_top = -0.22839506
+anchor_top = -0.4228395
 anchor_right = -0.7100694
 offset_left = -5.0
 offset_top = -238.0
@@ -2567,8 +2573,8 @@ metadata/_edit_use_anchors_ = true
 [node name="Panel4" type="Panel" parent="panels" unique_id=1603553676]
 z_index = -10
 anchors_preset = -1
-anchor_left = -3.0286458
-anchor_top = 0.15432099
+anchor_left = -0.36979166
+anchor_top = 0.0030864198
 anchor_right = -3.0182292
 anchor_bottom = 0.0030864198
 offset_left = 3346.0
@@ -2589,34 +2595,6 @@ offset_left = 6076.0
 offset_top = -504.0
 offset_right = 9828.0
 offset_bottom = 64.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_olg7q")
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel6" type="Panel" parent="panels" unique_id=1089843453]
-z_index = -10
-anchors_preset = -1
-anchor_left = -9.00434
-anchor_top = 0.8055556
-anchor_right = -9.00434
-anchor_bottom = 0.8055556
-offset_left = 9598.0
-offset_top = -488.0
-offset_right = 13350.0
-offset_bottom = 80.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_olg7q")
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel7" type="Panel" parent="panels" unique_id=1142021935]
-z_index = -10
-anchors_preset = -1
-anchor_left = -10.988715
-anchor_top = -0.61882716
-anchor_right = -10.988715
-anchor_bottom = -0.61882716
-offset_left = 11868.0
-offset_top = -71.0
-offset_right = 15620.0
-offset_bottom = 497.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_olg7q")
 metadata/_edit_use_anchors_ = true
 
@@ -2695,6 +2673,9 @@ position = Vector2(0, 455)
 shape = SubResource("RectangleShape2D_gunhw")
 disabled = true
 
+[node name="checkpoint" parent="doors/door3/Area2D" parent_id_path=PackedInt32Array(1162829862, 1790981447) index="1" unique_id=1853765462 instance=ExtResource("11_t1rx8")]
+position = Vector2(1664, 2937)
+
 [node name="TileMap" parent="doors/door3" index="1" unique_id=600262053]
 layer_0/tile_data = PackedInt32Array(196603, 196608, 3, 196604, 196608, 12, 196605, 196608, 13, 196606, 196608, 3, 196607, 196608, 2, 131072, 131072, 3, 131073, 851968, 14, 131074, 196608, 2, 131075, 262144, 3, 131076, 196608, 2, 196612, 196608, 3, 262147, 196608, 12, 327683, 196608, 2, 393219, 786432, 13, 458755, 1376256, 6, 393220, 851968, 14, 327684, 393216, 3, 262148, 1441792, 6, 458756, 262144, 2, 524292, 131072, 2, 589828, 131072, 3, 655364, 131072, 2, 720900, 393216, 3, 786436, 131072, 3, 851972, 131072, 2, 851971, 196608, 13, 851970, 196608, 13, 851969, 262144, 2, 851968, 917504, 14, 917503, 786432, 14, 917502, 196608, 12, 917501, 196608, 12, 917500, 196608, 12, 917499, 196608, 2, 851963, 196608, 12, 786427, 196608, 2, 720891, 196608, 3, 655355, 786432, 14, 589819, 851968, 14, 524283, 196608, 13, 458747, 720896, 9, 393211, 131072, 2, 327675, 196608, 13, 262139, 262144, 3, 262140, 131072, 3, 327676, 131072, 2, 393212, 131072, 3, 458748, 196608, 2, 524284, 786432, 15, 589820, 1441792, 6, 655356, 196608, 12, 720892, 786432, 15, 786428, 196608, 3, 851964, 196608, 12, 851965, 131072, 3, 851966, 196608, 2, 851967, 131072, 2, 786432, 131072, 2, 786433, 1441792, 6, 786434, 1441792, 6, 786435, 196608, 12, 720899, 196608, 12, 655363, 720896, 9, 589827, 851968, 14, 524291, 1441792, 6, 196611, 1376256, 6, 196610, 851968, 14, 196609, 1376256, 6, 196608, 131072, 3, 262143, 1376256, 6, 262142, 851968, 14, 262141, 196608, 2, 327677, 131072, 2, 327678, 720896, 9, 327679, 196608, 2, 262144, 1376256, 6, 262145, 131072, 3, 262146, 786432, 14, 327682, 786432, 15, 393218, 196608, 12, 458754, 131072, 3, 524290, 131072, 2, 589826, 196608, 2, 655362, 1441792, 6, 720898, 786432, 15, 720897, 1376256, 6, 720896, 131072, 3, 786431, 131072, 2, 786430, 851968, 14, 786429, 393216, 3, 720893, 851968, 14, 655357, 1441792, 6, 589821, 720896, 9, 524285, 131072, 2, 458749, 786432, 14, 393213, 196608, 3, 393214, 393216, 3, 393215, 1376256, 6, 327680, 720896, 9, 327681, 393216, 3, 393217, 1376256, 6, 458753, 393216, 3, 524289, 720896, 9, 589825, 131072, 3, 655361, 196608, 2, 655360, 720896, 9, 720895, 196608, 12, 655359, 131072, 2, 655358, 393216, 3, 589822, 1441792, 6, 524286, 196608, 12, 458750, 393216, 3, 458751, 1376256, 6, 393216, 131072, 2, 458752, 851968, 14, 524288, 196608, 3, 589824, 1376256, 6, 720894, 196608, 12, 589823, 720896, 9, 524287, 393216, 3)
 
@@ -2704,7 +2685,7 @@ shape = SubResource("RectangleShape2D_fpun6")
 
 [node name="BIG_ASS_PLATFORM_THAT_GONNA_GO_DOWN" parent="doors" unique_id=2098777628 instance=ExtResource("8_b121j")]
 position = Vector2(-435, 898)
-offset = Vector2(0, 265)
+offset = Vector2(0, 263)
 duration = 21.0
 
 [node name="CollisionShape2D" parent="doors/BIG_ASS_PLATFORM_THAT_GONNA_GO_DOWN/Area2D" parent_id_path=PackedInt32Array(2098777628, 1790981447) index="0" unique_id=78984682]
@@ -2783,6 +2764,20 @@ position = Vector2(3520, 1600)
 [node name="CollisionShape2D" parent="killzones/killzone5" index="0" unique_id=208567145]
 position = Vector2(-24, 11.5)
 shape = SubResource("RectangleShape2D_wc255")
+
+[node name="killzone6" parent="killzones" unique_id=1575702985 instance=ExtResource("7_klq6b")]
+position = Vector2(496, 5032)
+
+[node name="CollisionShape2D" parent="killzones/killzone6" index="0" unique_id=208567145]
+position = Vector2(200, 100)
+shape = SubResource("RectangleShape2D_cmcjb")
+
+[node name="killzone7" parent="killzones" unique_id=470137784 instance=ExtResource("7_klq6b")]
+position = Vector2(1424, 5112)
+
+[node name="CollisionShape2D" parent="killzones/killzone7" index="0" unique_id=208567145]
+position = Vector2(80, 4)
+shape = SubResource("RectangleShape2D_556r4")
 
 [node name="enemies" type="Node" parent="." unique_id=1289305470]
 
@@ -2972,20 +2967,29 @@ layer_0/tile_data = PackedInt32Array(65534, 393216, 17, 65535, 458752, 17, 0, 52
 
 [node name="checkpoints" type="Node" parent="." unique_id=1393826877]
 
-[node name="checkpoint" parent="checkpoints" unique_id=1853765462 instance=ExtResource("11_t1rx8")]
+[node name="checkpoint" parent="checkpoints" unique_id=979926917 instance=ExtResource("11_t1rx8")]
 position = Vector2(1400, 144.00002)
 
-[node name="checkpoint" parent="." unique_id=1745408566 instance=ExtResource("11_t1rx8")]
+[node name="checkpoint2" parent="checkpoints" unique_id=1745408566 instance=ExtResource("11_t1rx8")]
 position = Vector2(3352.0002, 872.00006)
 
-[node name="checkpoint2" parent="." unique_id=1075186266 instance=ExtResource("11_t1rx8")]
+[node name="checkpoint3" parent="checkpoints" unique_id=1075186266 instance=ExtResource("11_t1rx8")]
 position = Vector2(3232.0002, 1528)
 
-[node name="checkpoint3" parent="." unique_id=1884249483 instance=ExtResource("11_t1rx8")]
+[node name="checkpoint4" parent="checkpoints" unique_id=1884249483 instance=ExtResource("11_t1rx8")]
 position = Vector2(1328, 1544)
 
-[node name="checkpoint4" parent="." unique_id=244287529 instance=ExtResource("11_t1rx8")]
+[node name="checkpoint5" parent="checkpoints" unique_id=244287529 instance=ExtResource("11_t1rx8")]
 position = Vector2(-336, 888)
+
+[node name="checkpoint6" parent="checkpoints" unique_id=1636303011 instance=ExtResource("11_t1rx8")]
+position = Vector2(359.99988, 5054)
+
+[node name="checkpoint7" parent="checkpoints" unique_id=967082347 instance=ExtResource("11_t1rx8")]
+position = Vector2(1104, 5000)
+
+[node name="checkpoint8" parent="checkpoints" unique_id=418624493 instance=ExtResource("11_t1rx8")]
+position = Vector2(4464.0005, 3664)
 
 [node name="House" type="TileMap" parent="." unique_id=1946192523]
 tile_set = SubResource("TileSet_82cfe")
@@ -3026,6 +3030,8 @@ autoplay = &"block2"
 [editable path="killzones/killzone3"]
 [editable path="killzones/killzone4"]
 [editable path="killzones/killzone5"]
+[editable path="killzones/killzone6"]
+[editable path="killzones/killzone7"]
 [editable path="platforms/platform"]
 [editable path="platforms/platform2"]
 [editable path="platforms/platform3"]
